@@ -1,9 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="centered registration__form">
+
+    <div class="centered form">
         <div class="container">
             {{ form_start(form) }}
+
+                <h1>Register here</h1>
 
                 {{ form_row(form.email) }}
                 {{ form_row(form.plainPassword.first) }}
