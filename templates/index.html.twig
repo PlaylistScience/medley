@@ -1,6 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+    <p>Username: {{ app.user.username }}</p>
+    <p>Email: {{ app.user.email }}</p>
+
     {# load vue #}
     <div id="app"></div>
 {% endblock %}
