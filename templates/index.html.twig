@@ -1,9 +1,13 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <p>Username: {{ app.user.username }}</p>
-    <p>Email: {{ app.user.email }}</p>
+    {% if app.user %}
+        <p>Username: {{ app.user.username }}</p>
+        <p>Email: {{ app.user.email }}</p>
+    {% else %}
+        <a href="/login">Login</a>
+    {% endif %}
 
     {# load vue #}
-    <div id="app"></div>
+    <div id="player"></div>
 {% endblock %}
