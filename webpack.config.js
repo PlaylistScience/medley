@@ -41,9 +41,6 @@ Encore
     // enables Sass/SCSS support
     .enableSassLoader()
 
-    // uncomment if you use TypeScript
-    // .enableTypeScriptLoader()
-
     // allow *.ts and *.vue files to be processed
     .enableTypeScriptLoader(options => {
         options.appendTsSuffixTo = [/\.vue$/];

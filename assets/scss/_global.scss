@@ -1,0 +1,19 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background-color: $background;
+    color: $text;
+    font-family: $font;
+    font-size: $font-size;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid $text;
+    margin: 2rem 0rem;
+    color: $text;
+    font-family: $font;
+}
