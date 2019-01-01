@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Genre{% endblock %}
+
+{% block body %}
+
+<div class="centered form">
+    <div class="container">
+        {{ form_start(form) }}
+
+            <h1>Add a new genre</h1>
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.tracks) }}
+
+            <button type="submit">Submit</button>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+
+{% endblock %}
