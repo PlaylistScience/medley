@@ -7,7 +7,7 @@
 
 <script lang="ts">
     export default {
-        data: function () {
+        data() {
             return {
                 player: null,
                 done: false,
@@ -22,8 +22,8 @@
                     width: '640',
                     videoId: 'M7lc1UVf-VE',
                     events: {
-                    'onReady': this.onPlayerReady,
-                    'onStateChange': this.onPlayerStateChange
+                        'onReady': this.onPlayerReady,
+                        'onStateChange': this.onPlayerStateChange
                     }
                 });
             },
@@ -43,7 +43,7 @@
                 this.player.stopVideo();
             }
         },
-        created: function() {
+        created() {
 
             // create and insert script tag to load youtube's js
             var tag = document.createElement('script');
