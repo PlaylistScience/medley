@@ -2,6 +2,11 @@
     <div>
         <!-- The part that the youtube iframe api hooks into -->
         <div id="player"></div>
+        <ul id="tracks">
+            <li v-for="track in tracks">
+                {{ track }}
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -11,6 +16,7 @@
             return {
                 player: null,
                 done: false,
+                tracks,
             }
         },
         methods: {
@@ -44,6 +50,7 @@
             }
         },
         created() {
+            console.log('tracks', this.tracks);
 
             // create and insert script tag to load youtube's js
             var tag = document.createElement('script');

@@ -11,4 +11,11 @@
 
     {# load vue #}
     <div id="player"></div>
+
+    <script>
+        let tracks = [];
+        {% for track in tracks %}
+            tracks.push("{{track|raw}}");
+        {% endfor %}
+    </script>
 {% endblock %}
