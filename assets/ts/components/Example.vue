@@ -4,7 +4,10 @@
         <div id="player"></div>
         <ul id="tracks">
             <li v-for="track in tracks">
-                {{ track }}
+                <div>
+                    <span>{{ track.name }}</span>
+                    <span>{{ track.url }}</span>
+                </div>
             </li>
         </ul>
     </div>
