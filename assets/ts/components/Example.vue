@@ -37,9 +37,7 @@
         },
         methods: {
             playTrack(track: Track) {
-                this.newYTPlayer(this.getYTId(track.url), (player: any) => {
-                    this.player = player;
-                });
+                this.player.loadVideoById(this.getYTId(track.url)); // native yt embed api function
             },
             loadTracks(callback: (error?: Error) => void) {
                 this.$http.get('/api/tracks').then(response => {
