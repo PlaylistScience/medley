@@ -30,9 +30,9 @@
         data() {
             return {
                 player: null,
-                done: <Boolean> false,
                 tracks: <Tracks> [],
                 track: <Track> {},
+                index: <Number> 0,
             }
         },
         methods: {
@@ -66,7 +66,7 @@
                 callback(null);
             },
             onYouTubeIframeAPIReady() {
-                this.newYTPlayer(this.getYTId(this.tracks[0].url), (player: any) => {
+                this.newYTPlayer(this.getYTId(this.tracks[this.index].url), (player: any) => {
                     this.player = player;
                 });
             },
