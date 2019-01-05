@@ -12,7 +12,11 @@ require('../scss/app.scss');
 // const $ = require('jquery');
 
 import Vue from 'vue';
+import VueResource from 'vue-resource';
 import Example from './components/Example';
+
+// Load Vue modules
+Vue.use(VueResource);
 
 new Vue({
     el: '#player',

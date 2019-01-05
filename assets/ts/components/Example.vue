@@ -19,10 +19,34 @@
             return {
                 player: null,
                 done: false,
-                tracks,
+                tracks: [],
             }
         },
         methods: {
+            loadTracks() {
+                this.$http.get('/api/tracks').then(response => {
+                    // get body data
+                    this.tracks = response.body;
+                }, response => {
+                    // error callback
+                    console.error(response);
+                });
+            },
+            injectLoadYT() {
+                // create and insert script tag to load youtube's js
+                var tag = document.createElement('script');
+
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            },
+            bind() {
+            // bind youtube's event listeners to our vue functions
+            window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
+            window.onPlayerReady = this.onPlayerReady;
+            window.onPlayerStateChange = this.onPlayerStateChange;
+            window.stopVideo = this.stopVideo;
+            },
             onYouTubeIframeAPIReady() {
                 console.log('onYouTubeIframeAPIReady() vue function called');
 
@@ -53,20 +77,9 @@
             }
         },
         created() {
-            console.log('tracks', this.tracks);
-
-            // create and insert script tag to load youtube's js
-            var tag = document.createElement('script');
-
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            // bind youtube's event listeners to our vue functions
-            window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
-            window.onPlayerReady = this.onPlayerReady;
-            window.onPlayerStateChange = this.onPlayerStateChange;
-            window.stopVideo = this.stopVideo;
+            this.loadTracks();
+            this.injectLoadYT();
+            this.bind();
         }
     }
 </script>

@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "sass-loader": "^7.1.0",
-        "vue-class-component": "^6.3.2"
+        "vue-class-component": "^6.3.2",
+        "vue-resource": "^1.5.1"
     }
 }
