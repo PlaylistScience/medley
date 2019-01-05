@@ -11,19 +11,4 @@
 
     {# load vue #}
     <div id="player"></div>
-
-    <script>
-        {#  Todo: Find a better and more reliable way to do this
-            Since this way will have problems if the backend responds slower than vue beginds loading 
-         #}
-        {# pass track data from twig to vue #}
-
-        let tracks = [];
-        {% for track in tracks %}
-            tracks.push({
-                name: "{{ track.name }}",
-                url:  "{{ track.url }}"
-            });
-        {% endfor %}
-    </script>
 {% endblock %}
