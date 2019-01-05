@@ -41,16 +41,13 @@
             },
             loadTracks(callback: (error?: Error) => void) {
                 this.$http.get('/api/tracks').then(response => {
-                    // get body data
                     this.tracks = response.body;
-                    console.log('tracks loaded');
                     callback();
                 }, response => { // error
                     callback(response);
                 });
             },
             injectLoadYT(callback: (error: Error) => void) {
-                console.log('injectLoadYT()');
                 // create and insert script tag to load youtube's js
                 var tag = document.createElement('script');
                 tag.src = "https://www.youtube.com/iframe_api";
@@ -59,7 +56,6 @@
                 callback(null);
             },
             bind(callback: (error: Error) => void) {
-                console.log('bind()');
                 // bind youtube's event listeners to our vue functions
                 // encore says youtubeiframeapiready does not exist on window... but it do
                 // https://i.kym-cdn.com/photos/images/newsfeed/000/476/412/f38.png
@@ -70,12 +66,6 @@
                 callback(null);
             },
             onYouTubeIframeAPIReady() {
-                console.log('onYouTubeIframeAPIReady() vue function called');
-
-                console.log(this);
-                console.log('debug', this.tracks[0].url);
-                // this.getYTId();
-
                 this.newYTPlayer(this.getYTId(this.tracks[0].url), (player: any) => {
                     this.player = player;
                 });
@@ -91,19 +81,16 @@
                 }));
             },
             onPlayerReady(event) {
-                console.log('onPlayerReady function');
                 event.target.playVideo();
             },
             onPlayerStateChange(event) {
-                console.log('onPlayerStateChange event');
-                console.log(event);
+                console.log('onPlayerStateChange event', event);
             },
             stopVideo() {
-                console.log('stopVideo function');
                 this.player.stopVideo();
             },
-            onPlayerError() {
-                console.log('enError function');
+            onPlayerError(event) {
+                console.log('enError function', event);
             },
             getYTId(url: string): string {
                 // TODO: outsource this logic to a class
@@ -128,9 +115,8 @@
                     });
                 },
             ], (err, result) => {
-                // result now equals 'done'
                 if (err) throw err;
-                console.log('waterfall result', result);
+                // process result
             });
         }
     }
