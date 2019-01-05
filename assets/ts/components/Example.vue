@@ -99,21 +99,9 @@
         },
         created() {
             waterfall([
-                (callback: (error: Error) => void) => {
-                    this.loadTracks((error: Error) => {
-                       callback(error);
-                    });
-                },
-                (callback: (error: Error) => void) => {
-                    this.injectLoadYT((error: Error) => {
-                        callback(error);
-                    });
-                },
-                (callback: (error: Error) => void) => {
-                    this.bind((error: Error) => {
-                        callback(error);
-                    });
-                },
+                (callback: (error: Error) => void) => { this.loadTracks((error: Error) => { callback(error) }) },
+                (callback: (error: Error) => void) => { this.injectLoadYT((error: Error) => { callback(error) }) },
+                (callback: (error: Error) => void) => { this.bind((error: Error) => { callback(error) }) },
             ], (err, result) => {
                 if (err) throw err;
                 // process result
