@@ -3,10 +3,9 @@
         <!-- The part that the youtube iframe api hooks into -->
         <div id="player"></div>
         <ul id="tracks">
-            <li v-for="track in tracks">
+            <li v-for="track in tracks" :key="track.id">
                 <div>
-                    <span>{{ track.name }}</span>
-                    <span>{{ track.url }}</span>
+                    <a v-on:click="playTrack(track)">{{ track.name }}</a>
                 </div>
             </li>
         </ul>
@@ -14,15 +13,32 @@
 </template>
 
 <script lang="ts">
+    // add some typed rigor
+    interface Track {
+        id: number,
+        name: String,
+        url: String,
+    }
+
+    interface Tracks {
+        [position: number]: Track;
+    }
+
     export default {
+
+
         data() {
             return {
                 player: null,
-                done: false,
-                tracks: [],
+                done: <Boolean> false,
+                tracks: <Tracks> [],
+                track: <Track> {},
             }
         },
         methods: {
+            playTrack(track: Track) {
+
+            },
             loadTracks() {
                 this.$http.get('/api/tracks').then(response => {
                     // get body data
@@ -35,17 +51,18 @@
             injectLoadYT() {
                 // create and insert script tag to load youtube's js
                 var tag = document.createElement('script');
-
                 tag.src = "https://www.youtube.com/iframe_api";
                 var firstScriptTag = document.getElementsByTagName('script')[0];
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
             },
             bind() {
-            // bind youtube's event listeners to our vue functions
-            window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
-            window.onPlayerReady = this.onPlayerReady;
-            window.onPlayerStateChange = this.onPlayerStateChange;
-            window.stopVideo = this.stopVideo;
+                // bind youtube's event listeners to our vue functions
+                // encore says youtubeiframeapiready does not exist on window... but it do
+                // https://i.kym-cdn.com/photos/images/newsfeed/000/476/412/f38.png
+                window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
+                window.onPlayerReady = this.onPlayerReady;
+                window.onPlayerStateChange = this.onPlayerStateChange;
+                window.stopVideo = this.stopVideo;
             },
             onYouTubeIframeAPIReady() {
                 console.log('onYouTubeIframeAPIReady() vue function called');
@@ -65,11 +82,8 @@
                 event.target.playVideo();
             },
             onPlayerStateChange(event) {
-                console.log('onPlayerStateChange function');
-                if (event.data == YT.PlayerState.PLAYING && !this.done) {
-                    setTimeout(this.stopVideo, 6000);
-                    this.done = true;
-                }
+                console.log('onPlayerStateChange event');
+                console.log(event);
             },
             stopVideo() {
                 console.log('stopVideo function');
