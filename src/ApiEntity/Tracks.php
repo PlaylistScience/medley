@@ -33,7 +33,6 @@ class Tracks {
         foreach($tagsIterator as $t) {
             $flattenedTags[] = $t;
         }
-        return $flattenedTags;
-        return array_unique($flattenedTags);
+        return array_values(array_unique($flattenedTags));
     }
 }
