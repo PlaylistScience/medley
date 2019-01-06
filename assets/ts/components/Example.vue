@@ -15,7 +15,6 @@
 <script lang="ts">
     import waterfall from "async-waterfall";
 
-    // add some typed rigor
     interface Track {
         id: number,
         name: String,
@@ -35,10 +34,12 @@
                 index: <Number> 0,
             }
         },
+
         methods: {
             playTrack(track: Track) {
                 this.player.loadVideoById(this.getYTId(track.url)); // native yt embed api function
             },
+
             loadTracks(callback: (error?: Error) => void) {
                 this.$http.get('/api/tracks').then(response => {
                     this.tracks = response.body;
@@ -47,6 +48,7 @@
                     callback(response);
                 });
             },
+
             injectLoadYT(callback: (error: Error) => void) {
                 // create and insert script tag to load youtube's js
                 var tag = document.createElement('script');
@@ -55,6 +57,7 @@
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
                 callback(null);
             },
+
             bind(callback: (error: Error) => void) {
                 // bind youtube's event listeners to our vue functions
                 // encore says youtubeiframeapiready does not exist on window... but it do
@@ -65,11 +68,13 @@
                 window.stopVideo = this.stopVideo;
                 callback(null);
             },
+
             onYouTubeIframeAPIReady() {
                 this.newYTPlayer(this.getYTId(this.tracks[this.index].url), (player: any) => {
                     this.player = player;
                 });
             },
+
             newYTPlayer(videoId: string, callback: (player: any) => void) {
                 callback(new YT.Player('player', {
                     videoId,
@@ -80,23 +85,29 @@
                     }
                 }));
             },
+
             onPlayerReady(event) {
                 event.target.playVideo();
             },
+
             onPlayerStateChange(event) {
                 console.log('onPlayerStateChange event', event);
             },
+
             stopVideo() {
                 this.player.stopVideo();
             },
+
             onPlayerError(event) {
                 console.log('enError function', event);
             },
+
             getYTId(url: string): string {
                 // TODO: outsource this logic to a class
                 return url.replace(/.*watch\?v=/, '');
             }
         },
+
         created() {
             waterfall([
                 (callback: (error: Error) => void) => { this.loadTracks((error: Error) => { callback(error) }) },
