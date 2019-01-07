@@ -9,15 +9,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use App\Repository\GenreRepository;
-
 use Doctrine\ORM\EntityManagerInterface;
-
-use App\ApiEntity\Track;
-use App\ApiEntity\Tracks;
-
+use App\Repository\GenreRepository;
 use App\Entity\Genre;
-
+use App\Entity\Track;
+use App\ApiEntity\ApiTrack;
+use App\ApiEntity\ApiTracks;
 use GuzzleHttp\Client;
 
 class ImportOldSystemDataCommand extends Command
@@ -52,11 +49,25 @@ class ImportOldSystemDataCommand extends Command
         $tags = $tracks->getTags(); // get array of unique tags from list to be stored into db
 
         foreach ($tags as $tagName) {
-            // save $tag to repository
+            // save $tag to genre repository
+            // they are called genres in new system
             $this->createAndSaveGenre($tagName);
         }
 
+        foreach ($tracks as $track) {
+            $this->createAndSaveTrack($track);
+        }
+
         $io->success('Import successful.');
+    }
+
+    protected function createAndSaveTrack($track)
+    {
+        $track = new Track();
+
+        // Set required values
+        $track->setName($track->getName());
+        $track->getArtist();
     }
 
     protected function createAndSaveGenre($name)
@@ -74,21 +85,16 @@ class ImportOldSystemDataCommand extends Command
     {
         $type = gettype($json);
         if ($type === "array") {
-
-            $tracks = new Tracks([]);
-
+            $tracks = new ApiTracks([]);
             foreach ($json as $trackObject) {
-
                 // match up the data
-                $track = new Track([
+                $track = new ApiTrack([
                     'title' => $trackObject->title,
                     'url' => $trackObject->url,
                     'createdAt' => $trackObject->createdAt,
                 ]);
-
                 // match up optional data
                 if (isset($trackObject->tags)) $track->setTags($trackObject->tags);
-
                 $tracks->addTrack($track);
             }
             return $tracks;
