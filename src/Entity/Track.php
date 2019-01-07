@@ -44,7 +44,7 @@ class Track
     {
         $this->genre = new ArrayCollection();
 
-        $this->ytID = getYTID();
+        $this->ytID = $this->getYTID();
     }
 
     public function getId(): ?int
@@ -92,13 +92,13 @@ class Track
     {
         return preg_replace(
             [
-                "/.*watch\?v=/", 
+                "/.*watch\?v=/",
                 "/.*\:\/\/youtu.be\//"
-            ], 
+            ],
             [
-                "", 
+                "",
                 ""
-            ], 
+            ],
             $this->url);
     }
 
