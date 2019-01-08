@@ -19,7 +19,7 @@
         id: number,
         name: String,
         url: String,
-        yTID: String,
+        ytid: String,
     }
 
     interface Tracks {
@@ -39,7 +39,7 @@
         methods: {
             playTrack(track: Track) {
                 console.log('player', this.player);
-                this.player.loadVideoById(track.yTID); // native yt embed api function
+                this.player.loadVideoById(track.ytid); // native yt embed api function
             },
 
             loadTracks(callback: (error?: Error) => void) {
@@ -72,7 +72,7 @@
             },
 
             onYouTubeIframeAPIReady() {
-                this.newYTPlayer(this.tracks[this.index].yTID, (player: any) => {
+                this.newYTPlayer(this.tracks[this.index].ytid, (player: any) => {
                     this.player = player;
                 });
             },
