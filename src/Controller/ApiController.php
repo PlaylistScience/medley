@@ -27,7 +27,7 @@ class ApiController extends AbstractController
 
         $serializer = new Serializer($normalizers, $encoders);
 
-        // all callback parameters are optional (you can omit the ones you don't use)
+        // use first normalizer in array -- there must be a cleaner way to write this
         $normalizers[0]->setCircularReferenceHandler(function ($track) {
             return $track->getId();
         });
