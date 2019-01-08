@@ -38,13 +38,13 @@ class Track
      */
     private $genre;
 
-    private $yTID;
+    private $ytid;
 
     public function __construct()
     {
         $this->genre = new ArrayCollection();
 
-        $this->ytID = $this->getYTID();
+        $this->ytid = $this->getYTID();
     }
 
     public function getId(): ?int
@@ -94,12 +94,11 @@ class Track
             [
                 "/.*watch\?v=/",
                 "/.*\:\/\/youtu.be\//"
-            ],
-            [
+            ], [
                 "",
                 ""
             ],
-            $this->url);
+                $this->url);
     }
 
     /**

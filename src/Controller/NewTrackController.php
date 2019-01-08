@@ -24,8 +24,6 @@ class NewTrackController extends AbstractController
         $track = new Track();
         $form = $this->createForm(TrackType::class, $track);
 
-        $genre = $genreRepository->findAll();
-
         // handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -43,8 +41,7 @@ class NewTrackController extends AbstractController
         }
 
         return $this->render('new/track.html.twig', [
-            'form' => $form->createView(),
-            'genre' => $genre,
+            'form' => $form->createView()
         ]);
     }
 }

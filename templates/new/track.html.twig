@@ -13,11 +13,7 @@
             {{ form_row(form.name) }}
             {{ form_row(form.artist) }}
             {{ form_row(form.url) }}
-            <select>
-                {% for genre in genre %}
-                    <option>{{genre}}</option>
-                {% endfor %}
-            </select>
+            {{ form_row(form.genre) }}
 
             <button type="submit">Submit</button>
 

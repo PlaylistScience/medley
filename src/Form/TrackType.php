@@ -16,6 +16,7 @@ class TrackType extends AbstractType
             ->add('name')
             ->add('artist')
             ->add('url')
+            ->add('genre')
         ;
     }
 
