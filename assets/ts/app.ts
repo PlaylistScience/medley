@@ -13,12 +13,12 @@ require('../scss/app.scss');
 
 import Vue from 'vue';
 import VueResource from 'vue-resource';
-import Example from './components/Example';
+import Example from './components/Player';
 
 // Load Vue modules
 Vue.use(VueResource);
 
 new Vue({
     el: '#player',
-    render: h => h(Example)
+    render: h => h(Player)
 });

@@ -40,6 +40,11 @@ class Track
 
     private $ytid;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
     public function __construct()
     {
         $this->genre = new ArrayCollection();
@@ -123,6 +128,18 @@ class Track
         if ($this->genre->contains($genre)) {
             $this->genre->removeElement($genre);
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

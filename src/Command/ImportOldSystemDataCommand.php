@@ -61,13 +61,15 @@ class ImportOldSystemDataCommand extends Command
         $io->success('Import successful.');
     }
 
-    protected function createAndSaveTrack($track)
+    protected function createAndSaveTrack($jsonTrack)
     {
+        $apiTrack = new ApiTrack($jsonTrack);
         $track = new Track();
 
         // Set required values
-        $track->setName($track->getName());
-        $track->getArtist();
+        $track->setName($apiTrack->getName());
+        $track->setUrl($apiTrack->getUrl());
+        $track->setCreatedAt($apiTrack->getCreatedAt());
     }
 
     protected function createAndSaveGenre($name)

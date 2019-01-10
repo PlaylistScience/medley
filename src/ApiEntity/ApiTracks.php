@@ -2,12 +2,12 @@
 
 namespace App\ApiEntity;
 
-use App\ApiEntity\Track;
+use App\ApiEntity\ApiTrack;
 
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
-class Tracks {
+class ApiTracks {
     var $tracks;
 
     public function __construct(Array $trackArray)
@@ -15,7 +15,7 @@ class Tracks {
         $this->tracks = $trackArray;
     }
 
-    public function addTrack(Track $track)
+    public function addTrack(ApiTrack $track)
     {
         $this->tracks[] = $track;
     }
