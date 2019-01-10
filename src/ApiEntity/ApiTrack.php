@@ -3,14 +3,14 @@
 namespace App\ApiEntity;
 
 class ApiTrack {
-    var $title;
+    var $name;
     var $url;
     var $created_at;
     var $tags;
 
-    public function __construct(Array $data)
+    public function __construct($data)
     {
-        $this->title = $data['title'];
+        $this->name = $data['name'];
         $this->url = $data['url'];
         $this->created_at = $data['createdAt'];
     }
@@ -20,14 +20,14 @@ class ApiTrack {
         return $this->created_at;
     }
 
-    public function setCreatedAt($created_at): String
+    public function setCreatedAt($created_at): DateTime
     {
         $this->created_at = $created_at;
     }
 
     public function getUrl(): String
     {
-        return $url;
+        return $this->url;
     }
 
     public function setUrl(String $url)

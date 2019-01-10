@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use \DateTime;
+
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\GenreRepository;
 use App\Entity\Genre;
@@ -48,28 +50,30 @@ class ImportOldSystemDataCommand extends Command
         $tracks = $this->parseData($responseJson);
         $tags = $tracks->getTags(); // get array of unique tags from list to be stored into db
 
-        foreach ($tags as $tagName) {
-            // save $tag to genre repository
-            // they are called genres in new system
-            $this->createAndSaveGenre($tagName);
-        }
+        // foreach ($tags as $tagName) {
+        //     // save $tag to genre repository
+        //     // they are called genres in new system
+        //     $this->createAndSaveGenre($tagName);
+        // }
 
-        foreach ($tracks as $track) {
+        foreach ($tracks->tracks as $track) {
             $this->createAndSaveTrack($track);
         }
 
         $io->success('Import successful.');
     }
 
-    protected function createAndSaveTrack($jsonTrack)
+    protected function createAndSaveTrack($apiTrack)
     {
-        $apiTrack = new ApiTrack($jsonTrack);
+        // $apiTrack = new ApiTrack($jsonTrack);
         $track = new Track();
 
         // Set required values
         $track->setName($apiTrack->getName());
         $track->setUrl($apiTrack->getUrl());
-        $track->setCreatedAt($apiTrack->getCreatedAt());
+        $track->setCreatedAt(new DateTime($apiTrack->getCreatedAt()));
+        // get genre id and set to track entity
+        dump($track);
     }
 
     protected function createAndSaveGenre($name)
@@ -91,7 +95,7 @@ class ImportOldSystemDataCommand extends Command
             foreach ($json as $trackObject) {
                 // match up the data
                 $track = new ApiTrack([
-                    'title' => $trackObject->title,
+                    'name' => $trackObject->title,
                     'url' => $trackObject->url,
                     'createdAt' => $trackObject->createdAt,
                 ]);
