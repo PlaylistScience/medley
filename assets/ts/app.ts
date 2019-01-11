@@ -13,7 +13,7 @@ require('../scss/app.scss');
 
 import Vue from 'vue';
 import VueResource from 'vue-resource';
-import Example from './components/Player';
+import Player from './components/Player';
 
 // Load Vue modules
 Vue.use(VueResource);

@@ -27,6 +27,15 @@ class TrackRepository extends ServiceEntityRepository
         $this->_em->persist($track);
         $this->_em->flush();
     }
+
+    public function fetchAvailableTracks($limit = 10)
+    {
+        return $this->createQueryBuilder('s')
+            ->select('partial s.{id, name, artist}')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
     // /**
     //  * @return Track[] Returns an array of Track objects
     //  */
