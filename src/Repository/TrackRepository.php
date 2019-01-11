@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Track|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,11 +16,17 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TrackRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, EntityManagerInterface $em)
     {
         parent::__construct($registry, Track::class);
+        $this->_em = $em;
     }
 
+    public function save(Track $track)
+    {
+        $this->_em->persist($track);
+        $this->_em->flush();
+    }
     // /**
     //  * @return Track[] Returns an array of Track objects
     //  */

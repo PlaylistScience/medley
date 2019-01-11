@@ -45,12 +45,12 @@ class ApiTrack {
         $this->name = $name;
     }
 
-    public function hasTags(String $key)
+    public function hasTags()
     {
         return (boolean) $this->tags;
     }
 
-    public function setTags($tags)
+    public function setTags(Array $tags)
     {
         $this->tags = $tags;
     }

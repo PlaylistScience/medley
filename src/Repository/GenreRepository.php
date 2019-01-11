@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Genre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Genre|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +16,16 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class GenreRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, EntityManagerInterface $em)
     {
         parent::__construct($registry, Genre::class);
+        $this->_em = $em;
+    }
+
+    public function save(Genre $genre)
+    {
+        $this->_em->persist($genre);
+        $this->_em->flush();
     }
 
     // /**
@@ -47,4 +56,14 @@ class GenreRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    // public function findByName($value): ?Genre
+    // {
+    //     return $this->createQueryBuilder('g')
+    //         ->andWhere('g.name = :name')
+    //         ->setParameter('name', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
 }

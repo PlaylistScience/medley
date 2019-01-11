@@ -18,6 +18,7 @@ use App\Entity\Track;
 use App\ApiEntity\ApiTrack;
 use App\ApiEntity\ApiTracks;
 use GuzzleHttp\Client;
+use App\Repository\TrackRepository;
 
 class ImportOldSystemDataCommand extends Command
 {
@@ -25,10 +26,10 @@ class ImportOldSystemDataCommand extends Command
     var $em;
     var $genreRepository;
 
-    public function __construct(EntityManagerInterface $em, GenreRepository $genreRepository)
+    public function __construct(TrackRepository $trackRepository, GenreRepository $genreRepository)
     {
-        $this->em = $em;
         $this->genreRepository = $genreRepository;
+        $this->trackRepository = $trackRepository;
         parent::__construct();
     }
 
@@ -50,11 +51,11 @@ class ImportOldSystemDataCommand extends Command
         $tracks = $this->parseData($responseJson);
         $tags = $tracks->getTags(); // get array of unique tags from list to be stored into db
 
-        // foreach ($tags as $tagName) {
-        //     // save $tag to genre repository
-        //     // they are called genres in new system
-        //     $this->createAndSaveGenre($tagName);
-        // }
+        foreach ($tags as $tagName) {
+            // save $tag to genre repository
+            // they are called genres in new system
+            $this->createAndSaveGenre($tagName);
+        }
 
         foreach ($tracks->tracks as $track) {
             $this->createAndSaveTrack($track);
@@ -68,12 +69,20 @@ class ImportOldSystemDataCommand extends Command
         // $apiTrack = new ApiTrack($jsonTrack);
         $track = new Track();
 
+        if ($apiTrack->hasTags()) {
+            foreach ($apiTrack->getTags() as $apiTag) {
+                $genre = $this->genreRepository->findOneByName($apiTag);
+                $track->addGenre($genre);
+            }
+        }
+
         // Set required values
         $track->setName($apiTrack->getName());
+        $track->setArtist(''); // dummy value
         $track->setUrl($apiTrack->getUrl());
         $track->setCreatedAt(new DateTime($apiTrack->getCreatedAt()));
-        // get genre id and set to track entity
-        dump($track);
+
+        $this->trackRepository->save($track);
     }
 
     protected function createAndSaveGenre($name)
@@ -82,8 +91,7 @@ class ImportOldSystemDataCommand extends Command
         if (!$this->genreRepository->findByName($name)) {
             $genre = new Genre();
             $genre->setName($name);
-            $this->em->persist($genre);
-            $this->em->flush();
+            $this->genreRepository->save($genre);
         }
     }
 
