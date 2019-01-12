@@ -31,7 +31,7 @@ class TrackRepository extends ServiceEntityRepository
     public function fetchAvailableTracks($limit = 10)
     {
         return $this->createQueryBuilder('s')
-            ->select('partial s.{id, name, artist}')
+            ->select('partial s.{id, name, artist, url}')
             ->getQuery()
             ->getArrayResult()
         ;
