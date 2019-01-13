@@ -3,9 +3,9 @@ Playlist.science with users and actual features
 
 # install
 
-```git clone git@github.com:PlaylistScience/medley.git
-composer install
-yarn install```
+```git clone git@github.com:PlaylistScience/medley.git```<br/>
+```composer install```<br/>
+```yarn install```<br/>
 
 **build assets**
 
@@ -29,8 +29,8 @@ This will be empty black page. Proceed with next step.
 
 import songs into db from https://api.playlist.science
 
-```dc exec php sh
-bin/console importOldSystemData api.playlist.science```
+```dc exec php sh``` <br/>
+```bin/console importOldSystemData api.playlist.science``` <br/>
 
 visit localhost:4321
 
