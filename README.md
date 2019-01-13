@@ -3,9 +3,9 @@ Playlist.science with users and actual features
 
 # install
 
-git clone git@github.com:PlaylistScience/medley.git
-composer install
-yarn install
+```git clone git@github.com:PlaylistScience/medley.git```
+```composer install```
+```yarn install```
 
 **build assets**
 
