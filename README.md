@@ -7,31 +7,31 @@ git clone git@github.com:PlaylistScience/medley.git
 composer install
 yarn install
 
-# build assets
+**build assets**
 
-yarn encore dev
+```yarn encore dev```
 
-# watch assets
+**watch assets**
 
-yarn encore dev --watch
+```yarn encore dev --watch```
 
-# start php dev server and db
+**start php dev server and db**
 
-dc up -d
+```dc up -d```
 
-# watch logs
+**watch logs**
 
-dc logs -f
+```dc logs -f```
 
-# visit localhost:4321
+visit localhost:4321
 
 This will be empty black page. Proceed with next step.
 
-# import songs into db from https://api.playlist.science
+import songs into db from https://api.playlist.science
 
-dc exec php sh
-bin/console importOldSystemData api.playlist.science
+```dc exec php sh```
+```bin/console importOldSystemData api.playlist.science```
 
-# visit localhost:4321
+visit localhost:4321
 
-You can click on tracks and theyh will play
+You can click on tracks and they will play
