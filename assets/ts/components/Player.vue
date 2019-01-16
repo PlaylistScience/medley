@@ -108,11 +108,7 @@
             },
 
             isPlayingClass(track) {
-                if (track.id === this.track.id) {
-                    return "playing";
-                } else {
-                    return ""; // do not return any class names
-                }
+                return track.id === this.track.id ? "playing" : "";
             },
         },
 
