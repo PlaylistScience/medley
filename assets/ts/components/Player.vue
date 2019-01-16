@@ -2,11 +2,12 @@
     <div>
         <!-- The part that the youtube iframe api hooks into -->
         <div id="player"></div>
-        <button class="player--button" v-on:click="playTrack(nextTrack(track))">Next</button>
+        <button class="player--button" v-on:click="nextTrack()">Next</button>
         <ul id="tracks">
-            <li v-for="track in tracks" :key="track.id">
+            <!-- TODO 2 loops to render the current one at the top -->
+            <li v-for="(track, index) in tracks" :key="track.id">
                 <div>
-                    <a v-bind:class="isPlayingClass(track)" v-on:click="playTrack(track)">{{ track.name }}</a>
+                    <a v-bind:class="isPlayingClass(index)" v-on:click="playTrack(index)">{{ track.name }}</a>
                 </div>
             </li>
         </ul>
@@ -23,25 +24,20 @@
         ytid: String,
     }
 
-    interface Tracks {
-        [position: string]: Track;
-    }
-
     export default {
         data() {
             return {
                 player: null,
-                tracks: <Tracks> {},
-                track: <Track> {},
+                tracks: [],
+                currentIndex: 0
             }
         },
-
         methods: {
-            playTrack(track: Track) {
-                this.track = track;
+            playTrack(int: index) {
+                this.currentIndex = index;
+                this.track = this.tracks[this.currentIndex]; // Could be computed property?
                 this.player.loadVideoById(track.ytid); // native yt embed api function
             },
-
             loadTracks(callback: (error?: Error) => void) {
                 this.$http.get('/api/tracks').then(response => {
                     this.tracks = response.body;
@@ -50,7 +46,6 @@
                     callback(response);
                 });
             },
-
             injectLoadYT(callback: (error: Error) => void) {
                 // create and insert script tag to load youtube's js
                 var tag = document.createElement('script');
@@ -59,7 +54,6 @@
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
                 callback(null);
             },
-
             bind(callback: (error: Error) => void) {
                 // bind youtube's event listeners to our vue functions
                 // encore says youtubeiframeapiready does not exist on window... but it do
@@ -70,7 +64,6 @@
                 window.stopVideo = this.stopVideo;
                 callback(null);
             },
-
             onYouTubeIframeAPIReady() {
                 // manually set first track
                 // then feed the id manually into the new YT player
@@ -80,7 +73,6 @@
                     this.player = player;
                 });
             },
-
             newYTPlayer(videoId: string, callback: (player: any) => void) {
                 callback(new YT.Player('player', {
                     videoId,
@@ -91,34 +83,27 @@
                     }
                 }));
             },
-
             onPlayerReady(event) {
                 event.target.playVideo();
             },
-
             onPlayerStateChange(event) {
                 console.log('onPlayerStateChange event', event);
             },
-
             stopVideo() {
                 this.player.stopVideo();
             },
-
             onPlayerError(event) {
                 console.log('enError function', event);
             },
-
             // player
-            nextTrack(track: Track): Track {
-                // TODO: checks and bounds
-                return this.tracks[this.tracks.indexOf(track) + 1];
+            nextTrack() {
+                //bounds check yo self before you reck yourself
+                this.currentIndex++;
             },
-
-            isPlayingClass(track): String {
-                return track.id === this.track.id ? "playing" : "";
+            isPlayingClass(int: index): String {
+                return index === this.currentIndex ? "playing" : "";
             },
         },
-
         created() {
             waterfall([
                 (callback: (error: Error) => void) => { this.loadTracks((error: Error) => { callback(error) }) },
