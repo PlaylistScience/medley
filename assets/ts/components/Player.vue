@@ -5,7 +5,7 @@
         <ul id="tracks">
             <li v-for="track in tracks" :key="track.id">
                 <div>
-                    <a v-on:click="playTrack(track)">{{ track.name }}</a>
+                    <a v-bind:class="isPlayingClass(track)" v-on:click="playTrack(track)">{{ track.name }}</a>
                 </div>
             </li>
         </ul>
@@ -32,13 +32,12 @@
                 player: null,
                 tracks: <Tracks> [],
                 track: <Track> {},
-                index: <Number> 0,
             }
         },
 
         methods: {
             playTrack(track: Track) {
-                console.log('player', this.player);
+                this.track = track;
                 this.player.loadVideoById(track.ytid); // native yt embed api function
             },
 
@@ -72,7 +71,11 @@
             },
 
             onYouTubeIframeAPIReady() {
-                this.newYTPlayer(this.tracks[this.index].ytid, (player: any) => {
+                // manually set first track
+                // then feed the id manually into the new YT player
+                // this is a workaround to accomodate Youtube's expected way of handling this API
+                this.track = this.tracks[0];
+                this.newYTPlayer(this.tracks[0].ytid, (player: any) => {
                     this.player = player;
                 });
             },
@@ -102,6 +105,14 @@
 
             onPlayerError(event) {
                 console.log('enError function', event);
+            },
+
+            isPlayingClass(track) {
+                if (track.id === this.track.id) {
+                    return "playing";
+                } else {
+                    return ""; // do not return any class names
+                }
             },
         },
 
