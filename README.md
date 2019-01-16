@@ -1,6 +1,10 @@
 # medley
 Playlist.science with users and actual features
 
+# clarification
+```dc``` is an alias for ```docker-compose```
+If you don't have that alias, make it. It's good.
+
 # install
 
 ```git clone git@github.com:PlaylistScience/medley.git```<br/>

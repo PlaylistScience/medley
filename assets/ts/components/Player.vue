@@ -107,7 +107,7 @@
                 console.log('enError function', event);
             },
 
-            isPlayingClass(track) {
+            isPlayingClass(track): String {
                 return track.id === this.track.id ? "playing" : "";
             },
         },
