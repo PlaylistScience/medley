@@ -120,8 +120,8 @@
                 return this.index--;
             },
 
-            isPlayingClass(track): String {
-                return track.id === this.track.id ? "playing" : "";
+            isPlayingClass(index): String {
+                return this.index ? "playing" : "";
             },
         },
 
