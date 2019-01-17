@@ -4,6 +4,11 @@
         <div id="player"></div>
         <button class="player--button" v-on:click="playTrack(previousTrack())">Previous</button>
         <button class="player--button" v-on:click="playTrack(nextTrack())">Next</button>
+        <ul>
+            <li v-for="user in users" :key="user.id">
+                <a>{{ user.email }}</a>
+            </li>
+        </ul>
         <ul id="tracks">
             <li v-for="(track, index) in tracks" :key="track.id">
                 <div>
@@ -41,6 +46,15 @@
             playTrack(index: number) {
                 this.player.loadVideoById(this.tracks[index].ytid); // native yt embed api function
                 this.index = index;
+            },
+
+            loadUsers(callback: (error?: Error) => void) {
+                this.$http.get('/api/users').then(response => {
+                    this.users = response.body;
+                    callback();
+                }, response => {
+                    callback(response);
+                });
             },
 
             loadTracks(callback: (error?: Error) => void) {
@@ -134,6 +148,8 @@
                 if (err) throw err;
                 // process result
             });
+
+            this.loadUsers();
         }
     }
 </script>

@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Track;
 use App\Repository\TrackRepository;
+use App\Repository\SanitizedUserRepository;
 
 class ApiController extends AbstractController
 {
@@ -18,5 +19,15 @@ class ApiController extends AbstractController
         $tracks = $trackRepository->fetchAvailableTracks();
 
         return $this->json($tracks);
+    }
+
+    /**
+     * @Route("/api/users", name="api-users")
+     */
+    public function users(SanitizedUserRepository $sanitizedUserRepository)
+    {
+        $users = $sanitizedUserRepository->findAll();
+
+        return $this->json($users);
     }
 }
