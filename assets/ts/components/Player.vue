@@ -5,9 +5,9 @@
         <button class="player--button" v-on:click="playTrack(previousTrack())">Previous</button>
         <button class="player--button" v-on:click="playTrack(nextTrack())">Next</button>
         <ul id="tracks">
-            <li v-for="track in tracks" :key="track.id">
+            <li v-for="(track, index) in tracks" :key="track.id">
                 <div>
-                    <a v-bind:class="isPlayingClass(track)" v-on:click="playTrack(track)">{{ track.name }}</a>
+                    <a v-bind:class="isPlayingClass(index)" v-on:click="playTrack(index)">{{ track.name }}</a>
                 </div>
             </li>
         </ul>
@@ -39,8 +39,8 @@
 
         methods: {
             playTrack(index: number) {
+                this.player.loadVideoById(this.tracks[index].ytid); // native yt embed api function
                 this.index = index;
-                this.player.loadVideoById(this.tracks[this.index].ytid); // native yt embed api function
             },
 
             loadTracks(callback: (error?: Error) => void) {
@@ -76,7 +76,7 @@
                 // manually set first track
                 // then feed the id manually into the new YT player
                 // this is a workaround to accomodate Youtube's expected way of handling this API
-                this.track = this.tracks[0];
+                this.index = 0;
                 this.newYTPlayer(this.tracks[0].ytid, (player: any) => {
                     this.player = player;
                 });
@@ -112,16 +112,16 @@
             // player
             nextTrack(): Number {
                 // TODO: Add checks and bounds
-                return this.index++;
+                return this.index += 1;
             },
 
             previousTrack(): Number {
                 // TODO: Add checks and bounds
-                return this.index--;
+                return this.index -= 1;
             },
 
             isPlayingClass(index): String {
-                return this.index ? "playing" : "";
+                return this.index === index ? "playing" : "";
             },
         },
 
