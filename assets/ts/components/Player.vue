@@ -2,7 +2,8 @@
     <div>
         <!-- The part that the youtube iframe api hooks into -->
         <div id="player"></div>
-        <button class="player--button" v-on:click="playTrack(nextTrack(track))">Next</button>
+        <button class="player--button" v-on:click="playTrack(previousTrack())">Previous</button>
+        <button class="player--button" v-on:click="playTrack(nextTrack())">Next</button>
         <ul id="tracks">
             <li v-for="track in tracks" :key="track.id">
                 <div>
@@ -24,22 +25,22 @@
     }
 
     interface Tracks {
-        [position: string]: Track;
+        [position: number]: Track;
     }
 
     export default {
         data() {
             return {
                 player: null,
-                tracks: <Tracks> {},
-                track: <Track> {},
+                tracks: <Tracks> [],
+                index: Number,
             }
         },
 
         methods: {
-            playTrack(track: Track) {
-                this.track = track;
-                this.player.loadVideoById(track.ytid); // native yt embed api function
+            playTrack(index: number) {
+                this.index = index;
+                this.player.loadVideoById(this.tracks[this.index].ytid); // native yt embed api function
             },
 
             loadTracks(callback: (error?: Error) => void) {
@@ -109,9 +110,14 @@
             },
 
             // player
-            nextTrack(track: Track): Track {
-                // TODO: checks and bounds
-                return this.tracks[this.tracks.indexOf(track) + 1];
+            nextTrack(): Number {
+                // TODO: Add checks and bounds
+                return this.index++;
+            },
+
+            previousTrack(): Number {
+                // TODO: Add checks and bounds
+                return this.index--;
             },
 
             isPlayingClass(track): String {
