@@ -77,7 +77,7 @@
                 // then feed the id manually into the new YT player
                 // this is a workaround to accomodate Youtube's expected way of handling this API
                 this.index = 0;
-                this.newYTPlayer(this.tracks[0].ytid, (player: any) => {
+                this.newYTPlayer(this.tracks[this.index].ytid, (player: any) => {
                     this.player = player;
                 });
             },
