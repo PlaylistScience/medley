@@ -50,6 +50,12 @@ class Track
      */
     private $users;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="track", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
+
     public function __construct()
     {
         $this->genre = new ArrayCollection();
@@ -174,6 +180,18 @@ class Track
             $this->users->removeElement($user);
             $user->removeTrack($this);
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }

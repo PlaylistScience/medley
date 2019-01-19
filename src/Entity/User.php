@@ -48,6 +48,11 @@ class User implements UserInterface
      */
     private $tracks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Track", mappedBy="owner", cascade={"persist", "remove"})
+     */
+    private $track;
+
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
@@ -162,6 +167,23 @@ class User implements UserInterface
     {
         if ($this->tracks->contains($track)) {
             $this->tracks->removeElement($track);
+        }
+
+        return $this;
+    }
+
+    public function getTrack(): ?Track
+    {
+        return $this->track;
+    }
+
+    public function setTrack(Track $track): self
+    {
+        $this->track = $track;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $track->getOwner()) {
+            $track->setOwner($this);
         }
 
         return $this;
