@@ -31,8 +31,11 @@ class NewTrackController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $track = $form->getData();
+
+            // set values that are needed but not present in form
             $track->setOwner($this->getUser());
             $track->setCreatedAt(new DateTime('now'));
+
             $trackRepository->save($track);
 
             $this->addFlash(
