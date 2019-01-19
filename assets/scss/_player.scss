@@ -1,6 +1,20 @@
-.player--button {
+.tracks {
+    div:hover {
+        color: $orange;
+    }
+}
+
+.player--controls {
+    margin: 1rem;
+}
+
+.player--controls__button {
     width: 15rem;
     height: 3rem;
     background-color: $red;
     border: none;
+}
+
+.player--controls__button:hover {
+    background-color: $orange;
 }

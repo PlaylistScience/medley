@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Track;
 use App\Repository\TrackRepository;
-use App\Repository\SanitizedUserRepository;
+use App\Repository\UserRepository;
 
 class ApiController extends AbstractController
 {
@@ -24,9 +24,9 @@ class ApiController extends AbstractController
     /**
      * @Route("/api/users", name="api-users")
      */
-    public function users(SanitizedUserRepository $sanitizedUserRepository)
+    public function users(UserRepository $userRepository)
     {
-        $users = $sanitizedUserRepository->findAll();
+        $users = $userRepository->sanitizedUsers();
 
         return $this->json($users);
     }

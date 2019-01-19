@@ -45,11 +45,17 @@ class Track
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="tracks")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->genre = new ArrayCollection();
 
         $this->ytid = $this->getYTID();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,6 +146,34 @@ class Track
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addTrack($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removeTrack($this);
+        }
 
         return $this;
     }

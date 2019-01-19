@@ -2,14 +2,16 @@
     <div>
         <!-- The part that the youtube iframe api hooks into -->
         <div id="player"></div>
-        <button class="player--button" v-on:click="playTrack(previousTrack())">Previous</button>
-        <button class="player--button" v-on:click="playTrack(nextTrack())">Next</button>
+        <div class="player--controls">
+            <button class="player--controls__button" v-on:click="playTrack(previousTrack())">Previous</button>
+            <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
+        </div>
         <ul>
             <li v-for="user in users" :key="user.id">
                 <a>{{ user.email }}</a>
             </li>
         </ul>
-        <ul id="tracks">
+        <ul id="tracks" class="tracks">
             <li v-for="(track, index) in tracks" :key="track.id">
                 <div>
                     <a v-bind:class="isPlayingClass(index)" v-on:click="playTrack(index)">{{ track.name }}</a>

@@ -1,5 +1,6 @@
 html {
     font-size: 62.5%;
+    margin: 0;
 }
 
 body {
@@ -7,6 +8,7 @@ body {
     color: $text;
     font-family: $font;
     font-size: $font-size;
+    margin: 0;
 }
 
 input {
