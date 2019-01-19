@@ -30,4 +30,14 @@ class ApiController extends AbstractController
 
         return $this->json($users);
     }
+
+    /**
+     * @Route("/api/user/{id}", name="api-user")
+     */
+    public function user($id, UserRepository $userRepository)
+    {
+        $user = $userRepository->sanitizedUser($id);
+
+        return $this->json($user);
+    }
 }

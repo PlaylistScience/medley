@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\EntityManager;
@@ -22,10 +23,27 @@ class UserRepository extends ServiceEntityRepository
         $this->_em = $em;
     }
 
-    public function save(Track $track)
+    public function save(User $user)
     {
         $this->_em->persist($track);
         $this->_em->flush();
+    }
+
+    public function sanitizedUser($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.tracks', 'ut')
+            ->select('partial u.{id, email}', 'ut')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            // get array result so that select statement above takes effect
+            // otherwise with getResult() the entity is matched up and
+            // the entire use entity structure gets exposed with the front end
+            // ... even if the values get excludes in that case,
+            // getArrayResult is better practice in this case I think
+            ->getArrayResult()
+        ;
     }
 
     public function sanitizedUsers()
@@ -37,33 +55,4 @@ class UserRepository extends ServiceEntityRepository
             ->getArrayResult()
         ;
     }
-
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

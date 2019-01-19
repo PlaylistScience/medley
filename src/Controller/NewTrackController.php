@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\TrackType;
 use App\Entity\Track;
 use App\Repository\GenreRepository;
+use App\Repository\TrackRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,8 +19,10 @@ class NewTrackController extends AbstractController
     /**
      * @Route("/new/track", name="new_track")
      */
-    public function index(Request $request, EntityManagerInterface $entityManager, GenreRepository $genreRepository)
+    public function index(Request $request, TrackRepository $trackRepository, GenreRepository $genreRepository)
     {
+
+
         // Build the form
         $track = new Track();
         $form = $this->createForm(TrackType::class, $track);
@@ -29,8 +32,11 @@ class NewTrackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $track = $form->getData();
-            $entityManager->persist($track);
-            $entityManager->flush();
+            dump($this->getUser());
+
+            dump($track);
+            exit;
+            $trackRepository->save($track);
 
             $this->addFlash(
                 'notice', // flash type

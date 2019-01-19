@@ -19,6 +19,7 @@ use App\ApiEntity\ApiTrack;
 use App\ApiEntity\ApiTracks;
 use GuzzleHttp\Client;
 use App\Repository\TrackRepository;
+use App\Repository\UserRepository;
 
 class ImportOldSystemDataCommand extends Command
 {
@@ -26,10 +27,11 @@ class ImportOldSystemDataCommand extends Command
     var $em;
     var $genreRepository;
 
-    public function __construct(TrackRepository $trackRepository, GenreRepository $genreRepository)
+    public function __construct(TrackRepository $trackRepository, GenreRepository $genreRepository, UserRepository $userRepository)
     {
         $this->genreRepository = $genreRepository;
         $this->trackRepository = $trackRepository;
+        $this->userRepository = $userRepository;
         parent::__construct();
     }
 
@@ -37,13 +39,15 @@ class ImportOldSystemDataCommand extends Command
     {
         $this
             ->setDescription('Imports data from live playlist.science/songof.today (old system) instance')
-            ->addArgument('url', InputArgument::REQUIRED, 'Url location of live playlist.science/songof.today instance');
+            ->addArgument('url', InputArgument::REQUIRED, 'Url location of live playlist.science/songof.today instance')
+            ->addArgument('userId', InputArgument::REQUIRED, 'User id of song owner');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
         $url = $input->getArgument('url');
+        $userId = $input->getArgument('userId');
 
         $client = new Client();
         $response = $client->request('GET', $url);
@@ -58,13 +62,13 @@ class ImportOldSystemDataCommand extends Command
         }
 
         foreach ($tracks->tracks as $track) {
-            $this->createAndSaveTrack($track);
+            $this->createAndSaveTrack($track, $userId);
         }
 
         $io->success('Import successful.');
     }
 
-    protected function createAndSaveTrack($apiTrack)
+    protected function createAndSaveTrack($apiTrack, $userId)
     {
         // $apiTrack = new ApiTrack($jsonTrack);
         $track = new Track();
@@ -81,6 +85,10 @@ class ImportOldSystemDataCommand extends Command
         $track->setArtist(''); // dummy value
         $track->setUrl($apiTrack->getUrl());
         $track->setCreatedAt(new DateTime($apiTrack->getCreatedAt()));
+
+        // Set owner to param passed by id
+        $owner = $this->userRepository->findOneById($userId);
+        $track->setOwner($owner);
 
         $this->trackRepository->save($track);
     }

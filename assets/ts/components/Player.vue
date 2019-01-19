@@ -8,7 +8,10 @@
         </div>
         <ul>
             <li v-for="user in users" :key="user.id">
-                <a>{{ user.email }}</a>
+                <div>
+                    <span v-on:click="loadUser">{{ user.email }}</span> -
+                    <a v-bind:href="'user/' + user.id" >Profile</a>
+                </div>
             </li>
         </ul>
         <ul id="tracks" class="tracks">
@@ -40,14 +43,25 @@
             return {
                 player: null,
                 tracks: <Tracks> [],
+                // anyone know why Number needs to be uppercase here but lowercase everywhere else?
                 index: Number,
             }
         },
 
         methods: {
             playTrack(index: number) {
-                this.player.loadVideoById(this.tracks[index].ytid); // native yt embed api function
+                // native yt embed api function
+                this.player.loadVideoById(this.tracks[index].ytid);
                 this.index = index;
+            },
+
+            loadUser(id: number, callback: (error?: Error) => void) {
+                this.$http.get(`/api/user/${id}`).then(response => {
+                    this.tracks = response.tracks;
+                    callback();
+                }, response => {
+                    callback(response);
+                });
             },
 
             loadUsers(callback: (error?: Error) => void) {
@@ -77,10 +91,10 @@
                 callback(null);
             },
 
+            // bind youtube's event listeners to our vue functions
+            // encore says youtubeiframeapiready does not exist on window... but it do
+            // https://i.kym-cdn.com/photos/images/newsfeed/000/476/412/f38.png
             bind(callback: (error: Error) => void) {
-                // bind youtube's event listeners to our vue functions
-                // encore says youtubeiframeapiready does not exist on window... but it do
-                // https://i.kym-cdn.com/photos/images/newsfeed/000/476/412/f38.png
                 window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
                 window.onPlayerReady = this.onPlayerReady;
                 window.onPlayerStateChange = this.onPlayerStateChange;

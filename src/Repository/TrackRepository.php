@@ -31,14 +31,21 @@ class TrackRepository extends ServiceEntityRepository
     public function fetchAvailableTracks($limit = 10)
     {
         $tracks = $this->createQueryBuilder('s')
-            ->select('partial s.{id, name, artist, url}')
+            ->leftJoin('s.genre', 'g')
+            ->leftJoin('s.owner', 'u')
+            ->select('partial s.{id, name, artist, url}', 'g', 'partial u.{id}')
             ->getQuery()
             ->getArrayResult()
         ;
 
         $processedTracks = [];
 
-        // this seems hacky
+        // hacky
+        // looping through to assign temporary yt id parameters
+        // shouldn't this be part of the entities?
+        // is it because i'm skipping the entity creation above?
+        // then maybe I should make getYTID part of
+        // a static util class or something
         foreach ($tracks as $track) {
             $tempTrack = new Track();
             $tempTrack->setUrl($track['url']);
