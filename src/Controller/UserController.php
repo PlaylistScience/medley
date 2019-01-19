@@ -4,21 +4,24 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 use App\Repository\UserRepository;
 
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/user/{id}", name="user")
      */
-    public function index(UserRepository $userRepository)
+    public function index($id, Request $request, UserRepository $userRepository)
     {
-        $user = $userRepository->findOneByEmail('mstuessyosu@gmail.com');
-
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-            'user' => $user
-        ]);
+        if ($user = $userRepository->findOneById($id)) {
+            return $this->render('user/index.html.twig', [
+                'controller_name' => 'UserController',
+                'user' => $user,
+            ]);
+        } else {
+            return $this->render('error.html.twig');
+        }
     }
 }
