@@ -34,6 +34,7 @@ class TrackRepository extends ServiceEntityRepository
             ->leftJoin('s.genre', 'g')
             ->leftJoin('s.owner', 'u')
             ->select('partial s.{id, name, artist, url}', 'g', 'partial u.{id}')
+            ->orderBy('s.created_at', 'desc')
             ->getQuery()
             ->getArrayResult()
         ;

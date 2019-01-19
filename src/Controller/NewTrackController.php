@@ -14,6 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+use \DateTime;
+
 class NewTrackController extends AbstractController
 {
     /**
@@ -21,8 +23,6 @@ class NewTrackController extends AbstractController
      */
     public function index(Request $request, TrackRepository $trackRepository, GenreRepository $genreRepository)
     {
-
-
         // Build the form
         $track = new Track();
         $form = $this->createForm(TrackType::class, $track);
@@ -30,12 +30,9 @@ class NewTrackController extends AbstractController
         // handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $track = $form->getData();
-            dump($this->getUser());
-
-            dump($track);
-            exit;
+            $track->setOwner($this->getUser());
+            $track->setCreatedAt(new DateTime('now'));
             $trackRepository->save($track);
 
             $this->addFlash(
