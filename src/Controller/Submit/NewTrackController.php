@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Submit;
 
 // use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
