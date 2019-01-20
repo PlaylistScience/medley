@@ -31,17 +31,12 @@ class UserRepository extends ServiceEntityRepository
 
     public function sanitizedUser($id)
     {
+        // does not include track relationships
         return $this->createQueryBuilder('u')
-            ->leftJoin('u.tracks', 'ut')
-            ->select('partial u.{id, email}', 'ut')
+            ->select('partial u.{id, email}')
             ->where('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            // get array result so that select statement above takes effect
-            // otherwise with getResult() the entity is matched up and
-            // the entire use entity structure gets exposed with the front end
-            // ... even if the values get excludes in that case,
-            // getArrayResult is better practice in this case I think
             ->getArrayResult()
         ;
     }

@@ -40,4 +40,14 @@ class ApiController extends AbstractController
 
         return $this->json($user);
     }
+
+    /**
+     * @Route("/api/user/{id}/tracks", name="api-user-tracks")
+     */
+    public function userTracks($id, UserRepository $userRepository, TrackRepository $trackRepository)
+    {
+        $tracks = $trackRepository->fetchByUserId($id);
+
+        return $this->json($tracks);
+    }
 }
