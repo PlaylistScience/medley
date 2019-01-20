@@ -56,11 +56,12 @@
                 this.index = index;
             },
 
-            getUsers() {
+            getUsers(callback: (error?: Error) => void) {
                 this.$http.get('/api/users').then(response => {
                     this.users = response.body;
-                }, response => {
-                    // error
+                    callback();
+                }, response => { // error
+                    callback(response);
                 });
             },
 
@@ -82,6 +83,7 @@
                 });
             },
 
+            // creates a waterfall including all necessary functions that need to be run along with getTracks()
             loadTracks() {
                 waterfall([
                     (callback: (error: Error) => void) => { this.getTracks((error: Error) => { callback(error) }) },
@@ -93,12 +95,22 @@
                 });
             },
 
+            // wraps around getUserTracks
             loadUserTracks(id: number) {
                 waterfall([
                     (callback: (error: Error) => void) => { this.getUserTracks(id, (error: Error) => { callback(error) }) },
                 ], (err, result) => {
                     if (err) throw err;
                     // process result if needed
+                });
+            },
+
+            // wraps around getUsers
+            loadUsers() {
+                waterfall([
+                    (callback: (error: Error) => void) => { this.getUsers((error: Error) => { callback(error) }) },
+                ], (err, result) => {
+                    if (err) throw err;
                 });
             },
 
@@ -177,7 +189,7 @@
 
         created() {
             this.loadTracks();
-            this.getUsers();
+            this.loadUsers();
         }
     }
 </script>
