@@ -7,9 +7,10 @@
             <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
         </div>
         <ul>
+            <li v-on:click="getTracks()">all</li>
             <li v-for="user in users" :key="user.id">
                 <div>
-                    <span v-on:click="loadUser">{{ user.email }}</span> -
+                    <span v-on:click="loadUserTracks(user.id)">{{ user.email }}</span> -
                     <a v-bind:href="'user/' + user.id" >Profile</a>
                 </div>
             </li>
@@ -55,30 +56,49 @@
                 this.index = index;
             },
 
-            loadUser(id: number, callback: (error?: Error) => void) {
-                this.$http.get(`/api/user/${id}`).then(response => {
-                    this.tracks = response.tracks;
-                    callback();
-                }, response => {
-                    callback(response);
-                });
-            },
-
-            loadUsers(callback: (error?: Error) => void) {
+            getUsers() {
                 this.$http.get('/api/users').then(response => {
                     this.users = response.body;
-                    callback();
                 }, response => {
+                    // error
+                });
+            },
+
+            getUserTracks(id: number, callback: (error?: Error) => void) {
+                this.$http.get(`/api/user/${id}/tracks`).then(response => {
+                    this.tracks = response.body;
+                    callback();
+                }, response => { // error
                     callback(response);
                 });
             },
 
-            loadTracks(callback: (error?: Error) => void) {
+            getTracks(callback: (error?: Error) => void) {
                 this.$http.get('/api/tracks').then(response => {
                     this.tracks = response.body;
                     callback();
                 }, response => { // error
                     callback(response);
+                });
+            },
+
+            loadTracks() {
+                waterfall([
+                    (callback: (error: Error) => void) => { this.getTracks((error: Error) => { callback(error) }) },
+                    (callback: (error: Error) => void) => { this.injectLoadYT((error: Error) => { callback(error) }) },
+                    (callback: (error: Error) => void) => { this.bind((error: Error) => { callback(error) }) },
+                ], (err, result) => {
+                    if (err) throw err;
+                    // process result if needed
+                });
+            },
+
+            loadUserTracks(id: number) {
+                waterfall([
+                    (callback: (error: Error) => void) => { this.getUserTracks(id, (error: Error) => { callback(error) }) },
+                ], (err, result) => {
+                    if (err) throw err;
+                    // process result if needed
                 });
             },
 
@@ -156,16 +176,8 @@
         },
 
         created() {
-            waterfall([
-                (callback: (error: Error) => void) => { this.loadTracks((error: Error) => { callback(error) }) },
-                (callback: (error: Error) => void) => { this.injectLoadYT((error: Error) => { callback(error) }) },
-                (callback: (error: Error) => void) => { this.bind((error: Error) => { callback(error) }) },
-            ], (err, result) => {
-                if (err) throw err;
-                // process result
-            });
-
-            this.loadUsers();
+            this.loadTracks();
+            this.getUsers();
         }
     }
 </script>
