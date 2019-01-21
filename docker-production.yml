@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: ./docker/php-production/dockerfile
+    ports:
+      - "80:80"
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: pw
+    volumes:
+      - /var/storage/medley:/var/lib/postgresql/data
