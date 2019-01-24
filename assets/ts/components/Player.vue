@@ -46,6 +46,7 @@
                 tracks: <Tracks> [],
                 // anyone know why Number needs to be uppercase here but lowercase everywhere else?
                 index: Number,
+                users: [], // TODO: interface
             }
         },
 

@@ -1,10 +1,20 @@
 FROM php:7.2-cli-alpine
 
-WORKDIR /app
+COPY . /app/.
 
 RUN set -ex \
-    && apk --no-cache add postgresql-dev git \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && git clone https://github.com/PlaylistScience/medley.git
+    && apk --no-cache add postgresql-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
-ENTRYPOINT ["nohup", "php", "-S", "0.0.0.0:8080", "-t", "public"]
+FROM composer:latest
+WORKDIR /app
+COPY --from=0 /app .
+RUN composer install
+
+FROM kkarczmarczyk/node-yarn
+
+WORKDIR /app
+COPY --from=1 /app .
+RUN yarn encore prod
+
+ENTRYPOINT ["nohup", "php", "-S", "0.0.0.0:80", "-t", "public"]

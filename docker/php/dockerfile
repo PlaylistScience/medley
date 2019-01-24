@@ -6,7 +6,6 @@ WORKDIR /app
 
 RUN set -ex \
     && apk --no-cache add postgresql-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && php -m 
+    && docker-php-ext-install pdo pdo_pgsql
 
 ENTRYPOINT ["nohup", "php", "-S", "0.0.0.0:80", "-t", "public"]
