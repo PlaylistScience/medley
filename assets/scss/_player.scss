@@ -4,6 +4,12 @@
     }
 }
 
+.player {
+    width: 70vw; 
+    // height: 56.25vw;
+    height: 40vw;
+}
+
 .player--controls {
     display: flex;
     margin: 1rem;
