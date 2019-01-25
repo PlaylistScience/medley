@@ -1,27 +1,31 @@
 <template>
-    <div>
-        <!-- The part that the youtube iframe api hooks into -->
-        <div id="player"></div>
-        <div class="player--controls">
-            <button class="player--controls__button" v-on:click="playTrack(previousTrack())">Previous</button>
-            <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
+    <div class="container">
+        <div>
+            <!-- The part that the youtube iframe api hooks into -->
+            <div id="player"></div>
+            <div class="player--controls">
+                <button class="player--controls__button" v-on:click="playTrack(previousTrack())">Previous</button>
+                <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
+            </div>
+            <ul>
+                <li v-on:click="getTracks()">all</li>
+                <li v-for="user in users" :key="user.id">
+                    <div>
+                        <span v-on:click="loadUserTracks(user.id)">{{ user.email }}</span> -
+                        <a v-bind:href="'user/' + user.id" >Profile</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <ul>
-            <li v-on:click="getTracks()">all</li>
-            <li v-for="user in users" :key="user.id">
-                <div>
-                    <span v-on:click="loadUserTracks(user.id)">{{ user.email }}</span> -
-                    <a v-bind:href="'user/' + user.id" >Profile</a>
-                </div>
-            </li>
-        </ul>
-        <ul id="tracks" class="tracks">
-            <li v-for="(track, index) in tracks" :key="track.id">
-                <div>
-                    <a v-bind:class="isPlayingClass(index)" v-on:click="playTrack(index)">{{ track.name }}</a>
-                </div>
-            </li>
-        </ul>
+        <div>
+            <ul id="tracks" class="tracks">
+                <li v-for="(track, index) in tracks" :key="track.id">
+                    <div>
+                        <a v-bind:class="isPlayingClass(index)" v-on:click="playTrack(index)">{{ track.name }}</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 

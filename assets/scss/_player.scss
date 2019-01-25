@@ -5,7 +5,9 @@
 }
 
 .player--controls {
+    display: flex;
     margin: 1rem;
+    justify-content: space-between;
 }
 
 .player--controls__button {
