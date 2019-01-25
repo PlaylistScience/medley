@@ -17,7 +17,8 @@ class IndexController extends AbstractController
         $tracks = $trackRepository->findAll();
 
         return $this->render('index.html.twig', [
-            'tracks' => $tracks
+            'tracks' => $tracks,
+            'env' => getenv('ENV'),
         ]);
     }
 }

@@ -2,7 +2,8 @@
     <div class="container">
         <div>
             <!-- The part that the youtube iframe api hooks into -->
-            <div id="player" class="player"></div>
+            <div id="player" class="player" v-if="env === 'PROD' || env === 'DEV'"></div>
+            <div class="player--offline" v-if="env === 'OFFLINE'"></div>
             <div class="player--controls">
                 <button class="player--controls__button" v-on:click="playTrack(previousTrack())">Previous</button>
                 <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
@@ -49,6 +50,7 @@
     export default {
         data() {
             return {
+                env: String,
                 player: null,
                 tracks: <Tracks> [],
                 // anyone know why Number needs to be uppercase here but lowercase everywhere else?
@@ -196,6 +198,7 @@
         },
 
         created() {
+            this.env = env; // pass env value to vue
             this.loadTracks();
             this.loadUsers();
         }
