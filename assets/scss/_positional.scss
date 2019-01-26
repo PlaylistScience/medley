@@ -6,12 +6,27 @@
 
 .container {
     display: flex;
+    overflow: hidden;
 }
 
 .container--split__left {
     margin-left: 2rem;
+    margin-right: 2rem;
 }
 
 .container--split__right {
     margin-right: 2rem;
+}
+
+.container--split__top {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    height: 45vh;
+    overflow-y: scroll;
+}
+
+.container--split__bottom {
+    margin-top: 1rem;
+    height: 40vh;
+    overflow-y: scroll;
 }
