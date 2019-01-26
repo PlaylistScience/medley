@@ -4,18 +4,19 @@
     }
 }
 
-%player-dimensions {
+%player {
     width: 70vw; 
     height: 40vw;
+    margin: 1rem;
 }
 
 .player {
-    @extend %player-dimensions;
+    @extend %player;
 }
 
 .player--offline {
+    @extend %player;
     border: 1px solid white;
-    @extend %player-dimensions;
 }
 
 .player--controls {

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div>
+        <div class="container--split__left">
             <!-- The part that the youtube iframe api hooks into -->
             <div id="player" class="player" v-if="env === 'PROD' || env === 'DEV'"></div>
             <div class="player--offline" v-if="env === 'OFFLINE'"></div>
@@ -16,10 +16,7 @@
                 </li>
             </ul>
         </div>
-        <div>
-            <div>
-                Show profile information
-            </div>
+        <div class="container--split__right">
             <ul>
                 <li v-on:click="getTracks()">all</li>
                 <li v-for="user in users" :key="user.id">
