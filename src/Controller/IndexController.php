@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\TrackRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
-use App\Repository\TrackRepository;
 
 class IndexController extends AbstractController
 {
@@ -17,7 +16,7 @@ class IndexController extends AbstractController
         $tracks = $trackRepository->findAll();
 
         return $this->render('index.html.twig', [
-            'tracks' => $tracks
+            'tracks' => $tracks,
         ]);
     }
 }

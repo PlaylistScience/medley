@@ -2,11 +2,12 @@
 
 namespace App\ApiEntity;
 
-class ApiTrack {
-    var $name;
-    var $url;
-    var $created_at;
-    var $tags;
+class ApiTrack
+{
+    public $name;
+    public $url;
+    public $created_at;
+    public $tags;
 
     public function __construct($data)
     {
@@ -47,10 +48,10 @@ class ApiTrack {
 
     public function hasTags()
     {
-        return (boolean) $this->tags;
+        return (bool) $this->tags;
     }
 
-    public function setTags(Array $tags)
+    public function setTags(array $tags)
     {
         $this->tags = $tags;
     }
