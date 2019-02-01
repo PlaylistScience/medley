@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Track;
 use App\Entity\Genre;
+use App\Entity\Track;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,8 +16,7 @@ class TrackType extends AbstractType
             ->add('name')
             ->add('artist')
             ->add('url')
-            ->add('genre')
-        ;
+            ->add('genre');
     }
 
     public function configureOptions(OptionsResolver $resolver)

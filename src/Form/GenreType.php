@@ -13,8 +13,7 @@ class GenreType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('tracks')
-        ;
+            ->add('tracks');
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -23,5 +22,4 @@ class GenreType extends AbstractType
             'data_class' => Genre::class,
         ]);
     }
-
 }

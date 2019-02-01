@@ -2,10 +2,9 @@
 
 namespace App\Controller\Display;
 
+use App\Repository\GenreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
-use App\Repository\GenreRepository;
 
 class GenreController extends AbstractController
 {
@@ -17,7 +16,7 @@ class GenreController extends AbstractController
         $genre = $genreRepository->findAll();
 
         return $this->render('genre/index.html.twig', [
-            'genre' => $genre
+            'genre' => $genre,
         ]);
     }
 }

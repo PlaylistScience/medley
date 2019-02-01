@@ -3,18 +3,15 @@
 namespace App\Controller\Submit;
 
 // use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 
-use App\Form\TrackType;
 use App\Entity\Track;
+use App\Form\TrackType;
 use App\Repository\GenreRepository;
 use App\Repository\TrackRepository;
-
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-
-use \DateTime;
+use Symfony\Component\Routing\Annotation\Route;
 
 class NewTrackController extends AbstractController
 {
@@ -47,7 +44,7 @@ class NewTrackController extends AbstractController
         }
 
         return $this->render('new/track.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

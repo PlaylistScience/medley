@@ -2,13 +2,12 @@
 
 namespace App\Controller\Submit;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
-
-use App\Form\GenreType;
 use App\Entity\Genre;
+use App\Form\GenreType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 class NewGenreController extends AbstractController
 {
@@ -24,7 +23,6 @@ class NewGenreController extends AbstractController
         // handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $genre = $form->getData();
             $entityManager->persist($genre);
             $entityManager->flush();
