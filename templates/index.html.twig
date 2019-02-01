@@ -3,9 +3,16 @@
 {% block body %}
     <div class="user--panel">
         {% if app.user %}
-            <span>Username: {{ app.user.username }}</span>
-            <span>Email: {{ app.user.email }}</span>
-            <a href="/logout">Logout</a>
+            <span class="user--panel__content">
+                <span>
+                    <span>Username: {{ app.user.username }}</span>
+                    <span>Email: {{ app.user.email }}</span>
+                    <a href="/logout">Logout</a>
+                </span>
+                <span>
+                    <a href="/new/track">Add Track</a>
+                </span>
+            </span>
         {% else %}
             <a href="/login">Login</a>
             <a href="/register">Register</a>
