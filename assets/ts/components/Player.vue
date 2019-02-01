@@ -172,7 +172,9 @@
             },
 
             onPlayerStateChange(event) {
-                console.log('onPlayerStateChange event', event);
+                if(event.data === 0) {
+                    this.playTrack(this.nextTrack());
+                }
             },
 
             stopVideo() {
