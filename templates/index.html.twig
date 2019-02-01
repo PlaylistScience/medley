@@ -5,12 +5,17 @@
         {% if app.user %}
             <span class="user--panel__content">
                 <span>
-                    <span>Username: {{ app.user.username }}</span>
-                    <span>Email: {{ app.user.email }}</span>
-                    <a href="/logout">Logout</a>
+                    <a href="/">Home</a>
+                    <a href="/activity">Activity</a>
+                    <a href="/users">Users</a>
+                    <a href="/genres">Genres</a>
                 </span>
                 <span>
                     <a href="/new/track">Add Track</a>
+                </span>
+                <span>
+                    {{ app.user.username }}
+                    <a href="/logout">Logout</a>
                 </span>
             </span>
         {% else %}
