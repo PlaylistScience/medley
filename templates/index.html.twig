@@ -1,29 +1,6 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="user--panel">
-        {% if app.user %}
-            <span class="user--panel__content">
-                <span>
-                    <a href="/">Home</a>
-                    <a href="/activity">Activity</a>
-                    <a href="/users">Users</a>
-                    <a href="/genres">Genres</a>
-                </span>
-                <span>
-                    <a href="/new/track">Add Track</a>
-                </span>
-                <span>
-                    {{ app.user.username }}
-                    <a href="/logout">Logout</a>
-                </span>
-            </span>
-        {% else %}
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        {% endif %}
-    </div>
-
     {# load vue #}
     <div id="player"></div>
 
