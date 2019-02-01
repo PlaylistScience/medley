@@ -9,7 +9,10 @@
                 <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
             </div>
             <div class="player--trackinfo">
-                <p>Track information</p>
+                <div v-if="tracks[index]">
+                    <div>{{ tracks[index].artist }}</div>
+                    <div>- {{ tracks[index].name }}</div>
+                </div>
             </div>
         </div>
         <div class="container--split__right">
