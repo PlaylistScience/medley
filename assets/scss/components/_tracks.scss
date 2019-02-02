@@ -1,4 +1,8 @@
 .tracks__item {
+    &:hover {
+        color: $orange;
+    }
+
     &--playing {
         a {
             color: $red;
