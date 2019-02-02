@@ -13,4 +13,4 @@ docker run \
         --volume $(pwd):$(pwd) \
         --workdir $(pwd) \
     --workdir $(pwd) \
-    xigen/php:cli-composer composer "$@"
+    composer:latest composer "$@"
