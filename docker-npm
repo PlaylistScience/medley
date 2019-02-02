@@ -12,4 +12,4 @@ docker run \
 	--volume $(pwd):$(pwd) \
 	--workdir $(pwd) \
     --workdir $(pwd) \
-    node/10.14.1-alpine npm "$@"
+    node:10.14.1-alpine npm "$@"
