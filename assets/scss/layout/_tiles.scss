@@ -7,14 +7,10 @@ $s_panel-height: 3.7rem;
 }
 
 .l_tiles__panel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: $s_panel-height;
+    position: relative;
     width: 100%;
 }
 
 .l_tiles__content {
-    padding-top: $s_panel-height;
     height: 100%;
 }
