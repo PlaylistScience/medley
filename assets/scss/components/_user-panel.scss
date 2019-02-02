@@ -1,0 +1,39 @@
+.user-panel {
+    background-color: $red;
+    width: 100%;
+    padding: 1rem 0rem;
+    overflow-x: scroll;
+
+    @include breakpoint('m') {
+        overflow-x: auto;
+    }
+}
+
+.user-panel__content {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.user-panel__column {
+    list-style: none;
+    padding-left: 0;
+    white-space: nowrap;
+
+    @include breakpoint('m') {
+        white-space: normal;
+    }
+}
+
+.user-panel__item {
+    display: inline-block;
+
+    &:last-child {
+        padding-right: 1rem;
+    }
+}
+
+.user-panel a {
+    margin-left: 1rem;
+    color: white;
+}

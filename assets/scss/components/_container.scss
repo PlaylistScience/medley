@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoint('s') {
+        height: 100%;
+        overflow: hidden;
+        flex-direction: row;
+    }
+}
+
+.container__left {
+    @include breakpoint('s') {
+        flex-basis: 50%;
+        margin-right: 2rem;
+    }
+}
+
+.container__right {
+    @include breakpoint('s') {
+        flex-basis: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.container__top {
+    flex-shrink: 0;
+    max-height: 50%;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+
+    @include breakpoint('s') {
+        overflow-y: scroll;
+    }
+}
+
+.container__bottom {
+    flex-grow: 1;
+    margin-top: 1rem;
+
+    @include breakpoint('s') {
+        overflow-y: scroll;
+    }
+}

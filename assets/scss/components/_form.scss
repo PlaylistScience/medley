@@ -1,0 +1,29 @@
+$s_form-p-t: 4rem;
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: $s_form-p-t;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    &--centered {
+        @include centered;
+        display: flex;
+    }
+}
+
+.form__inner {
+    width: 40rem;
+}
+
+.form label {
+    display: block;
+}
+
+.form input {
+    width: 100%;
+    height: 3rem;
+    font-size: $font-size-input;
+}

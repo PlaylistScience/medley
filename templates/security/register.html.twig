@@ -4,19 +4,15 @@
 
 {% block body %}
 
-    <div class="centered form">
-        <div class="container">
-            {{ form_start(form) }}
+{{ form_start(form, { 'attr': { 'class': 'form form--centered' } }) }}
+    <div class="form__inner">
+        <h1>Register here</h1>
 
-                <h1>Register here</h1>
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
 
-                {{ form_row(form.email) }}
-                {{ form_row(form.plainPassword.first) }}
-                {{ form_row(form.plainPassword.second) }}
-
-                <button type="submit">Register!</button>
-
-            {{ form_end(form) }}
-        </div>
+        <button type="submit">Register!</button>
     </div>
+{{ form_end(form) }}
 {% endblock %}

@@ -1,9 +1,28 @@
 $background: black;
 $text: white;
 $font: 'Inconsolata', monospace;
-$font-size: 2rem;
-$font-size-input: 2rem;
+$font-size: 1.6rem;
+$font-size-input: 1.6rem;
 
 // Colors
 $red: red;
 $orange: orange;
+
+// Viewport Sizes
+$viewport-sizes: (
+    'xxs': 320px,
+    'xs': 400px,
+    's': 600px,
+    'm': 1040px,
+    'l': 1260px,
+    'xl': 1500px,
+    'xxl': 2100px,
+);
+
+$xxs: map-get($viewport-sizes, 'xxs');
+$xs: map-get($viewport-sizes, 'xs');
+$s: map-get($viewport-sizes, 's');
+$m: map-get($viewport-sizes, 'm');
+$l: map-get($viewport-sizes, 'l');
+$xl: map-get($viewport-sizes, 'xl');
+$xxl: map-get($viewport-sizes, 'xxl');

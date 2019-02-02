@@ -1,22 +1,22 @@
-<div class="user--panel">
+<div class="user-panel">
     {% if app.user %}
-        <span class="user--panel__content">
-                <span>
-                    <a href="/">Home</a>
-                    <a href="/activity">Activity</a>
-                    <a href="/users">Users</a>
-                    <a href="/genres">Genres</a>
-                </span>
-                <span>
-                    <a href="/new/track">Add Track</a>
-                </span>
-                <span>
-                    {{ app.user.username }}
-                    <a href="/logout">Logout</a>
-                </span>
-            </span>
-        {% else %}
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        {% endif %}
-    </div>
+        <div class="user-panel__content">
+            <ul class="user-panel__column">
+                <li class="user-panel__item"><a href="/">Home</a></li>
+                <li class="user-panel__item"><a href="/activity">Activity</a></li>
+                <li class="user-panel__item"><a href="/users">Users</a></li>
+                <li class="user-panel__item"><a href="/genres">Genres</a></li>
+            </ul>
+            <ul class="user-panel__column">
+                <li class="user-panel__item"><a href="/new/track">Add Track</a></li>
+            </ul>
+            <ul class="user-panel__column">
+                {{ app.user.username }}
+                <li class="user-panel__item"><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    {% else %}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    {% endif %}
+</div>

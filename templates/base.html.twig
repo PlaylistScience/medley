@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>{% block title %}medley{% endblock %}</title>
         <link rel="icon" type="img/ico" href="{{ asset('images/favicon.ico') }}">
         {% block stylesheets %}
@@ -10,7 +10,7 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="l_tiles">
         {# flash messages #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
@@ -20,9 +20,14 @@
             {% endfor %}
         {% endfor %}
 
-        {% include "panel/panel.html.twig" %}
+        <div class="l_tiles__panel">
+            {% include "panel/panel.html.twig" %}
+        </div>
+
         {# Body page content #}
-        {% block body %}{% endblock %}
+        <div class="l_tiles__content">
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

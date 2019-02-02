@@ -1,22 +1,32 @@
 <template>
     <div class="container">
-        <div class="container--split__left">
+        <div class="container__left">
             <!-- The part that the youtube iframe api hooks into -->
-            <div id="player" class="player" v-if="env === 'PROD' || env === 'DEV'"></div>
-            <div class="player--offline" v-if="env === 'OFFLINE'"></div>
-            <div class="player--controls">
-                <button class="player--controls__button" v-on:click="playTrack(previousTrack())">Previous</button>
-                <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
-            </div>
-            <div class="player--trackinfo">
-                <div v-if="tracks[index]">
-                    <div>{{ tracks[index].artist }}</div>
-                    <div>- {{ tracks[index].name }}</div>
+            <div class="player">
+                <div v-if="env === 'PROD' || env === 'DEV'"
+                    class="player__embed"
+                >
+                    <div id="player" class="player__iframe"></div>
+                </div>
+                <div v-if="env === 'OFFLINE'"
+                    class="player__embed player__embed--offline"
+                ></div>
+
+                <div class="player__controls">
+                    <button class="player__control-button" v-on:click="playTrack(previousTrack())">Previous</button>
+                    <button class="player__control-button" v-on:click="playTrack(nextTrack())">Next</button>
+                </div>
+
+                <div class="player__trackinfo">
+                    <div v-if="tracks[index]">
+                        <div>{{ tracks[index].artist }}</div>
+                        <div>- {{ tracks[index].name }}</div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="container--split__right">
-            <div class="container--split__top">
+        <div class="container__right">
+            <div class="container__top">
                 <div v-on:click="getTracks()">all</div>
                 <div v-for="user in users" :key="user.id">
                     <div>
@@ -25,12 +35,13 @@
                     </div>
                 </div>
             </div>
-            <div class="container--split__bottom">
+            <div class="container__bottom">
                 <div id="tracks" class="tracks">
-                    <div v-for="(track, index) in tracks" :key="track.id">
-                        <div>
-                            <a v-bind:class="isPlayingClass(index)" v-on:click="playTrack(index)">{{ track.name }}</a>
-                        </div>
+                    <div v-for="(track, index) in tracks" :key="track.id"
+                        class="tracks__item"
+                        :class="isPlayingClass(index)"
+                    >
+                        <a @click="playTrack(index)">{{ track.name }}</a>
                     </div>
                 </div>
             </div>
@@ -200,7 +211,7 @@
             },
 
             isPlayingClass(index): String {
-                return this.index === index ? "playing" : "";
+                return this.index === index ? "tracks__item--playing" : "";
             },
         },
 
