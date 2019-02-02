@@ -4,9 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Track|null find($id, $lockMode = null, $lockVersion = null)
@@ -36,8 +35,7 @@ class TrackRepository extends ServiceEntityRepository
             ->select('partial t.{id, name, artist, url}', 'g', 'partial o.{id}')
             ->orderBy('t.created_at', 'desc')
             ->getQuery()
-            ->getArrayResult()
-        ;
+            ->getArrayResult();
 
         return $this->setYtIdValues($tracks);
     }
@@ -54,8 +52,8 @@ class TrackRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->orderBy('t.created_at', 'desc')
             ->getQuery()
-            ->getArrayResult()
-        ;
+            ->getArrayResult();
+
         return $tracks;
     }
 
@@ -74,6 +72,36 @@ class TrackRepository extends ServiceEntityRepository
             $track['ytid'] = $tempTrack->getYTID();
             $processedTracks[] = $track;
         }
+
         return $processedTracks;
     }
+
+    // /**
+    //  * @return Track[] Returns an array of Track objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Track
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
 }

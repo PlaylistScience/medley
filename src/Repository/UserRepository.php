@@ -2,12 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
 use App\Entity\Track;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -37,8 +36,7 @@ class UserRepository extends ServiceEntityRepository
             ->where('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getArrayResult()
-        ;
+            ->getArrayResult();
     }
 
     public function sanitizedUsers()
@@ -47,7 +45,6 @@ class UserRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('u')
             ->select('partial u.{id, email}')
             ->getQuery()
-            ->getArrayResult()
-        ;
+            ->getArrayResult();
     }
 }

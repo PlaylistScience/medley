@@ -2,15 +2,14 @@
 
 namespace App\ApiEntity;
 
-use App\ApiEntity\ApiTrack;
-
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
-class ApiTracks {
-    var $tracks;
+class ApiTracks
+{
+    public $tracks;
 
-    public function __construct(Array $trackArray)
+    public function __construct(array $trackArray)
     {
         $this->tracks = $trackArray;
     }
@@ -25,14 +24,17 @@ class ApiTracks {
         $tags = [];
         $flattenedTags = [];
         foreach ($this->tracks as $track) {
-            if (isset($track->tags)) $tags[] = $track->tags;
+            if (isset($track->tags)) {
+                $tags[] = $track->tags;
+            }
         }
 
         // https://stackoverflow.com/questions/1319903/how-to-flatten-a-multidimensional-array
         $tagsIterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($tags));
-        foreach($tagsIterator as $t) {
+        foreach ($tagsIterator as $t) {
             $flattenedTags[] = $t;
         }
+
         return array_values(array_unique($flattenedTags));
     }
 }
