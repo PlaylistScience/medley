@@ -3,7 +3,10 @@ $s_panel-height: 3.7rem;
 
 .l_tiles {
     display: block;
-    height: 100%;
+
+    @include breakpoint('s') {
+        height: 100%;
+    }
 }
 
 .l_tiles__panel {
@@ -12,5 +15,7 @@ $s_panel-height: 3.7rem;
 }
 
 .l_tiles__content {
-    height: 100%;
+    @include breakpoint('s') {
+        height: 100%;
+    }
 }
