@@ -1,0 +1,7 @@
+.tracks__item {
+    &--playing {
+        a {
+            color: $red;
+        }
+    }
+}

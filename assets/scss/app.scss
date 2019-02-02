@@ -1,7 +1,16 @@
+// BASE
 @import "_variables";
-@import "_htmlElements";
-@import "_positional";
-@import "_forms";
-@import "_tracks";
-@import "_player";
-@import "_user";
+@import "_base";
+
+// UTIL
+@import "./util/_positional";
+
+// COMPONENTS
+@import "./components/_container";
+@import "./components/_user-panel";
+@import "./components/_form";
+@import "./components/_player";
+@import "./components/_tracks";
+
+// LAYOUTS
+@import "./layout/_tiles";

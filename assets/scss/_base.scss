@@ -1,6 +1,7 @@
 html {
-    font-size: 62.5%;
     margin: 0;
+    height: 100%; // this is an necessary for a nice, tiled interface. 
+    font-size: 62.5%;
 }
 
 body {
@@ -9,8 +10,12 @@ body {
     font-family: $font;
     font-size: $font-size;
     margin: 0;
-    // height: 100vh;
-    // overflow: hidden;
+}
+
+html,
+body,
+body * {
+    box-sizing: border-box;
 }
 
 input {
