@@ -15,3 +15,8 @@ services:
       POSTGRES_PASSWORD: pw
     volumes:
       - "./data/db:/var/lib/postgresql/data"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
