@@ -12,6 +12,8 @@ If you don't have that alias, make it. It's good.
 ```git clone git@github.com:PlaylistScience/medley.git```<br/>
 ```composer install```<br/>
 ```yarn install```<br/>
+```ERROR: There are no scenarios; must have at least one.```<br/>
+https://github.com/yarnpkg/yarn/issues/2821#issuecomment-284181365
 
 **build assets**
 
