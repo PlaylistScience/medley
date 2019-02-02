@@ -17,19 +17,24 @@
                     <button class="player__control-button" v-on:click="playTrack(nextTrack())">Next</button>
                 </div>
 
-                <div class="player__trackinfo">
-                    <div v-if="tracks[index]">
-                        <div>{{ tracks[index].artist }}</div>
-                        <div>- {{ tracks[index].name }}</div>
-                    </div>
-                </div>
+                <ul v-if="tracks[index]"
+                    class="player__trackinfo">
+                    <li class="player__trackinfo-item">Artist: {{ tracks[index].artist }}</li>
+                    <li class="player__trackinfo-item">Title: {{ tracks[index].name }}</li>
+                </ul>
             </div>
         </div>
         <div class="container__right">
             <div class="container__top">
-                <div v-on:click="getTracks()">all</div>
-                <div v-for="user in users" :key="user.id">
-                    <div>
+                <div class="people">
+                    <div v-on:click="getTracks()"
+                        class="people__item"
+                    >
+                        all
+                    </div>
+                    <div v-for="user in users" :key="user.id"
+                        class="people__item"
+                    >
                         <span v-on:click="loadUserTracks(user.id)">{{ user.email }}</span> -
                         <a v-bind:href="'user/' + user.id" >Profile</a>
                     </div>

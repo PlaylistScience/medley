@@ -21,7 +21,6 @@
 
 .player__controls {
     display: flex;
-    margin: 1rem;
     justify-content: space-between;
 }
 
@@ -37,4 +36,10 @@
 }
 
 .player__trackinfo {
+    list-style: none;
+    padding: 0 1rem;
+}
+
+.player__trackinfo-item {
+    display: block;
 }
