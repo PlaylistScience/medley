@@ -5,6 +5,8 @@ $s_panel-height: 3.7rem;
     display: block;
 
     @include breakpoint('s') {
+        display: flex;
+        flex-direction: column;
         height: 100%;
     }
 }
@@ -12,10 +14,16 @@ $s_panel-height: 3.7rem;
 .l_tiles__panel {
     position: relative;
     width: 100%;
+
+    @include breakpoint('s') {
+        flex-shrink: 0;
+    }
 }
 
 .l_tiles__content {
     @include breakpoint('s') {
+        flex-grow: 1;
         height: 100%;
+        overflow: hidden;
     }
 }
