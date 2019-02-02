@@ -14,4 +14,4 @@ services:
     environment:
       POSTGRES_PASSWORD: pw
     volumes:
-      - /var/storage/medley:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql/medley
