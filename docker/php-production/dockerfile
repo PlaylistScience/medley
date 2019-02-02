@@ -1,0 +1,18 @@
+FROM composer:latest
+WORKDIR /app
+COPY . /app/.
+RUN composer install
+
+FROM kkarczmarczyk/node-yarn
+WORKDIR /app
+COPY --from=0 /app .
+RUN yarn install && yarn encore prod
+
+FROM php:7.2-cli-alpine
+WORKDIR /app
+COPY --from=1 /app .
+RUN set -ex \
+    && apk --no-cache add postgresql-dev \
+    && docker-php-ext-install pdo pdo_pgsql
+
+ENTRYPOINT ["nohup", "php", "-S", "0.0.0.0:80", "-t", "public"]

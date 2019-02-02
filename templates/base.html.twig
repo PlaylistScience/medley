@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>{% block title %}medley{% endblock %}</title>
         <link rel="icon" type="img/ico" href="{{ asset('images/favicon.ico') }}">
         {% block stylesheets %}
@@ -19,6 +20,7 @@
             {% endfor %}
         {% endfor %}
 
+        {% include "panel/panel.html.twig" %}
         {# Body page content #}
         {% block body %}{% endblock %}
         {% block javascripts %}

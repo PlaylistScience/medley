@@ -1,17 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="user--panel">
-        {% if app.user %}
-            <span>Username: {{ app.user.username }}</span>
-            <span>Email: {{ app.user.email }}</span>
-            <a href="/logout">Logout</a>
-        {% else %}
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        {% endif %}
-    </div>
-
     {# load vue #}
     <div id="player"></div>
+
+    {# There must be a better way to do this #}
+    <script>
+        const env = '{{ env }}';
+    </script>
 {% endblock %}

@@ -1,27 +1,40 @@
 <template>
-    <div>
-        <!-- The part that the youtube iframe api hooks into -->
-        <div id="player"></div>
-        <div class="player--controls">
-            <button class="player--controls__button" v-on:click="playTrack(previousTrack())">Previous</button>
-            <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
+    <div class="container">
+        <div class="container--split__left">
+            <!-- The part that the youtube iframe api hooks into -->
+            <div id="player" class="player" v-if="env === 'PROD' || env === 'DEV'"></div>
+            <div class="player--offline" v-if="env === 'OFFLINE'"></div>
+            <div class="player--controls">
+                <button class="player--controls__button" v-on:click="playTrack(previousTrack())">Previous</button>
+                <button class="player--controls__button" v-on:click="playTrack(nextTrack())">Next</button>
+            </div>
+            <div class="player--trackinfo">
+                <div v-if="tracks[index]">
+                    <div>{{ tracks[index].artist }}</div>
+                    <div>- {{ tracks[index].name }}</div>
+                </div>
+            </div>
         </div>
-        <ul>
-            <li v-on:click="getTracks()">all</li>
-            <li v-for="user in users" :key="user.id">
-                <div>
-                    <span v-on:click="loadUserTracks(user.id)">{{ user.email }}</span> -
-                    <a v-bind:href="'user/' + user.id" >Profile</a>
+        <div class="container--split__right">
+            <div class="container--split__top">
+                <div v-on:click="getTracks()">all</div>
+                <div v-for="user in users" :key="user.id">
+                    <div>
+                        <span v-on:click="loadUserTracks(user.id)">{{ user.email }}</span> -
+                        <a v-bind:href="'user/' + user.id" >Profile</a>
+                    </div>
                 </div>
-            </li>
-        </ul>
-        <ul id="tracks" class="tracks">
-            <li v-for="(track, index) in tracks" :key="track.id">
-                <div>
-                    <a v-bind:class="isPlayingClass(index)" v-on:click="playTrack(index)">{{ track.name }}</a>
+            </div>
+            <div class="container--split__bottom">
+                <div id="tracks" class="tracks">
+                    <div v-for="(track, index) in tracks" :key="track.id">
+                        <div>
+                            <a v-bind:class="isPlayingClass(index)" v-on:click="playTrack(index)">{{ track.name }}</a>
+                        </div>
+                    </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -42,10 +55,12 @@
     export default {
         data() {
             return {
+                env: String,
                 player: null,
                 tracks: <Tracks> [],
                 // anyone know why Number needs to be uppercase here but lowercase everywhere else?
                 index: Number,
+                users: [], // TODO: interface
             }
         },
 
@@ -160,7 +175,9 @@
             },
 
             onPlayerStateChange(event) {
-                console.log('onPlayerStateChange event', event);
+                if(event.data === 0) {
+                    this.playTrack(this.nextTrack());
+                }
             },
 
             stopVideo() {
@@ -188,6 +205,7 @@
         },
 
         created() {
+            this.env = env; // pass env value to vue
             this.loadTracks();
             this.loadUsers();
         }

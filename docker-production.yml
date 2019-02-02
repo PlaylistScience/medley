@@ -4,11 +4,9 @@ services:
   php:
     build:
       context: ./
-      dockerfile: ./docker/php/dockerfile
-    volumes:
-      - "./:/app/"
+      dockerfile: ./docker/php-production/dockerfile
     ports:
-      - "4321:80"
+      - "80:80"
   db:
     image: postgres
     environment:

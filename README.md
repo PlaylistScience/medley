@@ -1,6 +1,8 @@
 # medley
 Playlist.science with users and actual features
 
+alpha.medley.live
+
 # clarification
 ```dc``` is an alias for ```docker-compose```
 If you don't have that alias, make it. It's good.

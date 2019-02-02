@@ -1,0 +1,15 @@
+#!/bin/bash
+
+tty=
+tty -s && tty=--tty
+docker run \
+    $tty \
+    --rm \
+    --init \
+    --net host \
+	--user $(id -u):$(id -g) \
+	--volume $HOME:$HOME:ro \
+	--volume $(pwd):$(pwd) \
+	--workdir $(pwd) \
+    --workdir $(pwd) \
+    node:10.14.1-alpine npm "$@"

@@ -4,8 +4,25 @@
     }
 }
 
-.player--controls {
+%player {
+    width: 50vw; 
+    height: 60vh;
     margin: 1rem;
+}
+
+.player {
+    @extend %player;
+}
+
+.player--offline {
+    @extend %player;
+    border: 1px solid white;
+}
+
+.player--controls {
+    display: flex;
+    margin: 1rem;
+    justify-content: space-between;
 }
 
 .player--controls__button {
@@ -17,4 +34,8 @@
 
 .player--controls__button:hover {
     background-color: $orange;
+}
+
+.player--trackinfo {
+    height: 24vh;
 }
