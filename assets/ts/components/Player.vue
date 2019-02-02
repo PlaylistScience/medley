@@ -27,26 +27,33 @@
         <div class="container__right">
             <div class="container__top">
                 <div class="people">
-                    <div v-on:click="getTracks()"
-                        class="people__item"
-                    >
-                        all
-                    </div>
-                    <div v-for="user in users" :key="user.id"
-                        class="people__item"
-                    >
-                        <span v-on:click="loadUserTracks(user.id)">{{ user.email }}</span> -
-                        <a v-bind:href="'user/' + user.id" >Profile</a>
+                    <h2 class="people__heading">People</h2>
+                    <div class="people_list">
+                        <div @click="getTracks()"
+                            class="people__item"
+                        >
+                            all
+                        </div>
+                        <div v-for="user in users" :key="user.id"
+                            class="people__item"
+                            @click="loadUserTracks(user.id)"
+                        >
+                            <span>{{ user.email }}</span> - <a :href="'user/' + user.id" >Profile</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="container__bottom">
                 <div id="tracks" class="tracks">
-                    <div v-for="(track, index) in tracks" :key="track.id"
-                        class="tracks__item"
-                        :class="isPlayingClass(index)"
-                    >
-                        <a @click="playTrack(index)">{{ track.name }}</a>
+                    <h2 class="tracks__heading">Tracks</h2>
+                    <div class="tracks__list">
+                        <div v-for="(track, index) in tracks" :key="track.id"
+                            class="tracks__item"
+                            :class="isPlayingClass(index)"
+                            @click="playTrack(index)"
+                        >
+                            <a>{{ track.name }}</a>
+                        </div>
                     </div>
                 </div>
             </div>

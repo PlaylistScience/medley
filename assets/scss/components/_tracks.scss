@@ -1,4 +1,10 @@
+.tracks {
+    padding: 1rem;
+}
+
 .tracks__item {
+    cursor: pointer;
+
     &:hover {
         color: $orange;
     }
