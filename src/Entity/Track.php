@@ -110,10 +110,10 @@ class Track
         return preg_replace(
             [
                 "/.*watch\?v=/",
-                "/.*\:\/\/youtu.be\//"
+                "/.*\:\/\/youtu.be\//",
             ], [
-                "",
-                ""
+                '',
+                '',
             ],
                 $this->url);
     }
@@ -195,5 +195,4 @@ class Track
 
         return $this;
     }
-
 }

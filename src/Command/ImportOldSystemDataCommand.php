@@ -2,30 +2,26 @@
 
 namespace App\Command;
 
+use App\ApiEntity\ApiTrack;
+use App\ApiEntity\ApiTracks;
+use App\Entity\Genre;
+use App\Entity\Track;
+use App\Repository\GenreRepository;
+use App\Repository\TrackRepository;
+use App\Repository\UserRepository;
+use DateTime;
+use GuzzleHttp\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-
-use \DateTime;
-
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\GenreRepository;
-use App\Entity\Genre;
-use App\Entity\Track;
-use App\ApiEntity\ApiTrack;
-use App\ApiEntity\ApiTracks;
-use GuzzleHttp\Client;
-use App\Repository\TrackRepository;
-use App\Repository\UserRepository;
 
 class ImportOldSystemDataCommand extends Command
 {
     protected static $defaultName = 'importOldSystemData';
-    var $em;
-    var $genreRepository;
+    public $em;
+    public $genreRepository;
 
     public function __construct(TrackRepository $trackRepository, GenreRepository $genreRepository, UserRepository $userRepository)
     {
@@ -106,20 +102,25 @@ class ImportOldSystemDataCommand extends Command
     protected function parseData($json)
     {
         $type = gettype($json);
-        if ($type === "array") {
+        if ($type === 'array') {
             $tracks = new ApiTracks([]);
             foreach ($json as $trackObject) {
                 // match up the data
                 $track = new ApiTrack([
-                    'name' => $trackObject->title,
-                    'url' => $trackObject->url,
+                    'name'      => $trackObject->title,
+                    'url'       => $trackObject->url,
                     'createdAt' => $trackObject->createdAt,
                 ]);
                 // match up optional data
-                if (isset($trackObject->tags)) $track->setTags($trackObject->tags);
+                if (isset($trackObject->tags)) {
+                    $track->setTags($trackObject->tags);
+                }
                 $tracks->addTrack($track);
             }
+
             return $tracks;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 }
