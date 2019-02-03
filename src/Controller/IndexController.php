@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\TrackRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
-use App\Repository\TrackRepository;
 
 class IndexController extends AbstractController
 {
@@ -18,7 +17,7 @@ class IndexController extends AbstractController
 
         return $this->render('index.html.twig', [
             'tracks' => $tracks,
-            'env' => getenv('ENV'),
+            'env'    => getenv('ENV'),
         ]);
     }
 }
