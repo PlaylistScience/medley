@@ -13,6 +13,9 @@ If you don't have that alias, make it. It's good.
 ```composer install```<br/>
 ```yarn install```<br/>
 
+**If Yarn throws: No such file or directory: 'install' or ERROR: There are no scenarios; must have at least one**
+https://github.com/yarnpkg/yarn/issues/2821#issuecomment-284181365
+
 **build assets**
 
 ```yarn encore dev```
