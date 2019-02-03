@@ -1,30 +1,6 @@
 <template>
-    <div class="container">
+    <div class="container container--m-rev-vert">
         <div class="container__left">
-            <!-- The part that the youtube iframe api hooks into -->
-            <div class="player">
-                <div v-if="env === 'PROD' || env === 'DEV'"
-                    class="player__embed"
-                >
-                    <div id="player" class="player__iframe"></div>
-                </div>
-                <div v-if="env === 'OFFLINE'"
-                    class="player__embed player__embed--offline"
-                ></div>
-
-                <div class="player__controls">
-                    <button class="player__control-button" v-on:click="playTrack(previousTrack())">Previous</button>
-                    <button class="player__control-button" v-on:click="playTrack(nextTrack())">Next</button>
-                </div>
-
-                <ul v-if="tracks[index]"
-                    class="player__trackinfo">
-                    <li class="player__trackinfo-item">Artist: {{ tracks[index].artist }}</li>
-                    <li class="player__trackinfo-item">Title: {{ tracks[index].name }}</li>
-                </ul>
-            </div>
-        </div>
-        <div class="container__right">
             <div class="container__top">
                 <div class="people">
                     <h2 class="people__heading">People</h2>
@@ -56,6 +32,30 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="container__right">
+            <!-- The part that the youtube iframe api hooks into -->
+            <div class="player">
+                <div v-if="env === 'PROD' || env === 'DEV'"
+                    class="player__embed"
+                >
+                    <div id="player" class="player__iframe"></div>
+                </div>
+                <div v-if="env === 'OFFLINE'"
+                    class="player__embed player__embed--offline"
+                ></div>
+
+                <div class="player__controls">
+                    <button class="player__control-button" v-on:click="playTrack(previousTrack())">Previous</button>
+                    <button class="player__control-button" v-on:click="playTrack(nextTrack())">Next</button>
+                </div>
+
+                <ul v-if="tracks[index]"
+                    class="player__trackinfo">
+                    <li class="player__trackinfo-item">Artist: {{ tracks[index].artist }}</li>
+                    <li class="player__trackinfo-item">Title: {{ tracks[index].name }}</li>
+                </ul>
             </div>
         </div>
     </div>
