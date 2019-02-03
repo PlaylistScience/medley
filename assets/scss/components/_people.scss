@@ -1,0 +1,12 @@
+
+.people {
+    padding: 1rem;
+}
+
+.people__item {
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

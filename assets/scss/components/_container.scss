@@ -13,7 +13,7 @@
 .container__left {
     @include breakpoint('s') {
         flex-basis: 50%;
-        margin-right: 2rem;
+        margin-right: 1rem;
     }
 }
 
@@ -29,8 +29,6 @@
 .container__top {
     flex-shrink: 0;
     max-height: 50%;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
 
     @include breakpoint('s') {
         overflow-y: scroll;
@@ -39,7 +37,6 @@
 
 .container__bottom {
     flex-grow: 1;
-    margin-top: 1rem;
 
     @include breakpoint('s') {
         overflow-y: scroll;
