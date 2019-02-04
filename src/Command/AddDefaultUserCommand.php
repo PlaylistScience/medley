@@ -4,10 +4,7 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use DateTime;
-use GuzzleHttp\Client;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -34,9 +31,10 @@ class AddDefaultUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-       
-        if($this->hasUser()) {
+
+        if ($this->hasUser()) {
             $io->success('User already created.');
+
             return;
         }
 
@@ -51,15 +49,16 @@ class AddDefaultUserCommand extends Command
     }
 
     /**
-     * Check default user exists
-     * @return boolean
+     * Check default user exists.
+     *
+     * @return bool
      */
     protected function hasUser()
     {
         if ($this->userRepository->findByEmail(self::DEFAULT_EMAIL)) {
             return true;
         }
+
         return false;
     }
-
 }
