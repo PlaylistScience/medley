@@ -46,6 +46,10 @@ visit localhost:4321
 
 This will be empty black page. Proceed with next step.
 
+create default user
+
+```bin/console addDefaultUserCommand``` <br/>
+
 import songs into db from https://api.playlist.science
 
 ```bin/console importOldSystemData api.playlist.science``` <br/>
