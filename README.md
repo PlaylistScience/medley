@@ -32,13 +32,26 @@ https://github.com/yarnpkg/yarn/issues/2821#issuecomment-284181365
 
 ```dc logs -f```
 
+**edit db connection**
+
+Edit .env
+
+`DATABASE_URL=pgsql://postgres:pw@db:5432/medley`
+
+```dc exec php sh``` <br/>
+```bin/console make:migration``` <br/>
+```bin/console doctrine:migrations:migrate``` <br/>
+
 visit localhost:4321
 
 This will be empty black page. Proceed with next step.
 
+create default user
+
+```bin/console addDefaultUserCommand``` <br/>
+
 import songs into db from https://api.playlist.science
 
-```dc exec php sh``` <br/>
 ```bin/console importOldSystemData api.playlist.science``` <br/>
 
 visit localhost:4321

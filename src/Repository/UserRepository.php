@@ -24,7 +24,7 @@ class UserRepository extends ServiceEntityRepository
 
     public function save(User $user)
     {
-        $this->_em->persist($track);
+        $this->_em->persist($user);
         $this->_em->flush();
     }
 
