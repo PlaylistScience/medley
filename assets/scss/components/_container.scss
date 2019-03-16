@@ -46,10 +46,35 @@
     }
 }
 
+%scrollbar {
+    background-color: black;
+    width: 1rem;
+}
+
+%scrollbar__thumb {
+    background-color: $red;
+}
+
+.container__top::-webkit-scrollbar {
+    @extend %scrollbar;   
+}
+
+.container__top::-webkit-scrollbar-thumb {
+    @extend %scrollbar__thumb;
+}
+
 .container__bottom {
     flex-grow: 1;
 
     @include breakpoint('s') {
         overflow-y: scroll;
     }
+}
+
+.container__bottom::-webkit-scrollbar {
+    @extend %scrollbar;
+}
+
+.container__bottom::-webkit-scrollbar-thumb {
+    @extend %scrollbar__thumb;
 }
