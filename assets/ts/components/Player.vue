@@ -21,6 +21,7 @@
             </div>
             <div class="container__bottom">
                 <div id="tracks" class="tracks">
+                    <input class="tracks__filter" placeholder="Filter" />
                     <h2 class="tracks__heading">Tracks</h2>
                     <div class="tracks__list">
                         <div v-for="(track, index) in tracks" :key="track.id"
@@ -56,6 +57,7 @@
                     <li class="player__trackinfo-item">Artist: {{ tracks[index].artist }}</li>
                     <li class="player__trackinfo-item">Title: {{ tracks[index].name }}</li>
                 </ul>
+
             </div>
         </div>
     </div>
