@@ -14,7 +14,7 @@
                             class="people__item"
                             @click="loadUserTracks(user.id)"
                         >
-                            <span>{{ user.email }}</span> - <a :href="'user/' + user.id" >Profile</a>
+                            <span>{{ user.username }}</span> - <a :href="'user/' + user.id" >Profile</a>
                         </div>
                     </div>
                 </div>

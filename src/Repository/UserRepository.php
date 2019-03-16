@@ -32,7 +32,7 @@ class UserRepository extends ServiceEntityRepository
     {
         // does not include track relationships
         return $this->createQueryBuilder('u')
-            ->select('partial u.{id, email}')
+            ->select('partial u.{id, username}')
             ->where('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
@@ -43,7 +43,7 @@ class UserRepository extends ServiceEntityRepository
     {
         // add join to statement to pull in track data also
         return $this->createQueryBuilder('u')
-            ->select('partial u.{id, email}')
+            ->select('partial u.{id, username}')
             ->getQuery()
             ->getArrayResult();
     }
