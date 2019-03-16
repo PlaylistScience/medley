@@ -53,6 +53,11 @@ class User implements UserInterface
      */
     private $track;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
@@ -185,6 +190,13 @@ class User implements UserInterface
         if ($this !== $track->getOwner()) {
             $track->setOwner($this);
         }
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }
