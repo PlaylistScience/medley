@@ -54,7 +54,7 @@ class TrackRepository extends ServiceEntityRepository
             ->getQuery()
             ->getArrayResult();
 
-        return $tracks;
+        return $this->setYtIdValues($tracks);
     }
 
     public function setYtIdValues($tracks = [])
