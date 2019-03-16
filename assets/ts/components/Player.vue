@@ -217,12 +217,18 @@
 
             // player
             nextTrack(): Number {
-                // TODO: Add checks and bounds
+                if (this.index === this.tracks.length - 1) {
+                    return 0;
+                }
+
                 return this.index += 1;
             },
 
             previousTrack(): Number {
-                // TODO: Add checks and bounds
+                if (this.index === 0) {
+                    return this.tracks.length - 1;
+                }
+
                 return this.index -= 1;
             },
 
