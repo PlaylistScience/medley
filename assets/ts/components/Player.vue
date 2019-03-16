@@ -21,13 +21,14 @@
             </div>
             <div class="container__bottom">
                 <div id="tracks" class="tracks">
-                    <input class="tracks__filter" placeholder="Filter" />
+                    <input class="tracks__filter" placeholder="Filter" v-model="filter" />
                     <h2 class="tracks__heading">Tracks</h2>
                     <div class="tracks__list">
                         <div v-for="(track, index) in tracks" :key="track.id"
                             class="tracks__item"
                             :class="isPlayingClass(index)"
                             @click="playTrack(index)"
+                            v-if="notFiltered(track)"
                         >
                             <a>{{ track.name }}</a>
                         </div>
@@ -82,10 +83,11 @@
             return {
                 env: String,
                 player: null,
-                tracks: <Tracks> [],
+                master: <Tracks> [],
                 // anyone know why Number needs to be uppercase here but lowercase everywhere else?
                 index: Number,
                 users: [], // TODO: interface
+                filter: '',
             }
         },
 
@@ -107,7 +109,7 @@
 
             getUserTracks(id: number, callback: (error?: Error) => void) {
                 this.$http.get(`/api/user/${id}/tracks`).then(response => {
-                    this.tracks = response.body;
+                    this.master = response.body;
                     callback();
                 }, response => { // error
                     callback(response);
@@ -116,7 +118,7 @@
 
             getTracks(callback: (error?: Error) => void) {
                 this.$http.get('/api/tracks').then(response => {
-                    this.tracks = response.body;
+                    this.master = response.body;
                     callback();
                 }, response => { // error
                     callback(response);
@@ -179,7 +181,7 @@
                 // then feed the id manually into the new YT player
                 // this is a workaround to accomodate Youtube's expected way of handling this API
                 this.index = 0;
-                this.newYTPlayer(this.tracks[this.index].ytid, (player: any) => {
+                this.newYTPlayer(this.master[this.index].ytid, (player: any) => {
                     this.player = player;
                 });
             },
@@ -227,6 +229,17 @@
             isPlayingClass(index): String {
                 return this.index === index ? "tracks__item--playing" : "";
             },
+
+            notFiltered(track) {
+                return track.name.includes(this.filter);
+            },
+
+        },
+
+        computed: {
+            tracks() {
+                return this.master.filter(track => track.name.includes(this.filter));
+            }
         },
 
         created() {
